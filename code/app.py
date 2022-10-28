@@ -11,7 +11,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
-    return 'Welcome anon</a>'
+    return 'Welcome anon 2</a>'
 
 
 @app.route('/pippo')
