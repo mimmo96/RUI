@@ -1,9 +1,9 @@
 from mysql.connector import (connection)
 
-MySQL_host = "db4free.net"
-MySQL_user = "mariorui"
-MySQL_password = "mariorui"
-MySQL_db = "mariorui"
+MySQL_host = "sql.freedb.tech"
+MySQL_user = "freedb_mariorui"
+MySQL_password = "w!UpGmqcBvtW7a*"
+MySQL_db = "freedb_mariorui"
 
 def __open_connection():
     try:
