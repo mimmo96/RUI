@@ -9,4 +9,4 @@ services:
       - ./code:/code
     ports:
       - 5001:5000
-  
+    restart: always
