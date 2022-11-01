@@ -18,16 +18,16 @@ def hello_world():
 
 @app.route('/testpost', methods=['POST'])
 def testpost():
-    name = request.args.get('name')
-    surname = request.args.get('surname')
-    age = request.args.get('age')
-    #data = request.get_json(force=True) #for get json data
-    
-    data = [name,surname,age]
+    #name = request.args.get('name')
+    #surname = request.args.get('surname')
+    #age = request.args.get('age')
+    data = request.get_json(force=True, silent=True, cache=False) #for get json data
+    print(data)
+    #data = [name,surname,age]
 
     response = jsonify(data)
     response.status_code = 200 # or 400 or whatever
-    
+
     return response
     
 
@@ -47,6 +47,16 @@ def gestget():
 @app.route('/tmp_mysql', methods=['GET'])
 def pippone():
     return 'ciao pippo'+DatabaseManager.test_connection()
+
+### Post Test ###
+with app.test_client() as test:
+    rv = test.post('/testpost', json={
+        'name': 'ciao', 'cognome': 'rui'
+    })
+    json_data = rv.get_json()
+    print('data: ' + str(json_data))
+    #assert
+#################
 
 if __name__ == '__main__':
     print( DatabaseManager.test_connection() )
