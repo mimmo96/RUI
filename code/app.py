@@ -1,13 +1,18 @@
 import logging
 import os
-import DatabaseManager
+from DatabaseManager import DatabaseManager
 import json
 import requests
 
 from flask import Flask, request, jsonify
 
+from DatabseManager2 import DatabaseManager2
+
 logging.basicConfig(level=logging.DEBUG)
-secret_key = os.urandom(24).hex()  
+secret_key = os.urandom(24).hex()
+
+db = DatabaseManager()
+db2 = DatabaseManager2()
 
 app = Flask(__name__)
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = False
@@ -26,10 +31,16 @@ def testpost():
     #data = [name,surname,age]
 
     response = jsonify(data)
-    response.status_code = 200 # or 400 or whatever
+    response.status_code = 201 # or 400 or whatever
 
     return response
     
+
+@app.route('/get_data', methods=['GET'])
+def get_data():
+    res = db2.get_data()
+    print(res)
+    return res
 
 @app.route('/testget', methods=['GET'])
 def gestget():
@@ -44,21 +55,5 @@ def gestget():
     return response
 
 
-@app.route('/tmp_mysql', methods=['GET'])
-def pippone():
-    return 'ciao pippo'+DatabaseManager.test_connection()
-
-### Post Test ###
-with app.test_client() as test:
-    rv = test.post('/testpost', json={
-        'name': 'ciao', 'cognome': 'rui'
-    })
-    json_data = rv.get_json()
-    print('data: ' + str(json_data))
-    #assert
-#################
-
 if __name__ == '__main__':
-    print( DatabaseManager.test_connection() )
-
     app.run(debug=True, host='0.0.0.0')

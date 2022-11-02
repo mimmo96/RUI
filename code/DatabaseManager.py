@@ -1,37 +1,46 @@
 from mysql.connector import (connection)
 
-MySQL_host = "sql.freedb.tech"
-MySQL_user = "freedb_mariorui"
-MySQL_password = "w!UpGmqcBvtW7a*"
-MySQL_db = "freedb_mariorui"
+class DatabaseManager:
+    __MySQL_host     = "sql.freedb.tech"
+    __MySQL_user     = "freedb_mariorui"
+    __MySQL_password = "w!UpGmqcBvtW7a*"
+    __MySQL_db       = "freedb_mariorui"
+    __cursor = None
+    __connection = None
 
-def __open_connection():
-    try:
-        cnx = connection.MySQLConnection(user=MySQL_user, password=MySQL_password,
-                                         host=MySQL_host, database=MySQL_db)
-        cursor = cnx.cursor()
-    except Exception as e:
-        print("[error] Connection Error"+str(e))
-        return None, None
+    def __init__(self):
+        self.__connection = connection.MySQLConnection(user=self.__MySQL_user, password=self.__MySQL_password, host=self.__MySQL_host, database=self.__MySQL_db)
+        self.__cursor     = self.__connection.cursor()
 
-    return cnx, cursor
+    def commit(self):
+        self.__connection.commit()
 
-def __close_connection(connection, cursor):
-    connection.commit()
-    cursor.close()
-    connection.close()
-
-def test_connection():
-    connection, cursor = __open_connection()
-    if connection is not None:
+    def ping(self):
         query = "select count(*) from tmp"
-        cursor.execute(query)
+        cur = self.__connection.cursor()
+        cur.execute(query)
 
         count = 0
-        for (c) in cursor:
+        for (c) in cur:
             count = c
+        return count[0]
 
-        __close_connection(connection, cursor)
-        return "Ci sono :"+str(count[0])+" record"
-    else:
-        return "[Error] Connection is null"
+    def insert_tmp(self, id):
+        query = "INSERT INTO tmp (id) VALUES (%s)"
+        cur = self.__connection.cursor()
+        vales = (id,)
+        cur.execute(query, vales)
+        self.commit()
+
+    def insert_update(self, id):
+        query = "INSERT INTO tmp (id) VALUES (%s)"
+        cur = self.__connection.cursor()
+        vales = (id,)
+        cur.execute(query, vales)
+        self.commit()
+
+if __name__ == '__main__':
+    db = DatabaseManager()
+    print(db.ping())
+    db.insert_tmp("126378")
+    print(db.ping())
