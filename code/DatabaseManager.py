@@ -1,46 +1,33 @@
-from mysql.connector import (connection)
+import psycopg2
+from psycopg2 import Error
 
 class DatabaseManager:
-    __MySQL_host     = "sql.freedb.tech"
-    __MySQL_user     = "freedb_mariorui"
-    __MySQL_password = "w!UpGmqcBvtW7a*"
-    __MySQL_db       = "freedb_mariorui"
-    __cursor = None
-    __connection = None
 
     def __init__(self):
-        self.__connection = connection.MySQLConnection(user=self.__MySQL_user, password=self.__MySQL_password, host=self.__MySQL_host, database=self.__MySQL_db)
-        self.__cursor     = self.__connection.cursor()
-
-    def commit(self):
-        self.__connection.commit()
+        self.__connection = psycopg2.connect(user="postgres",
+                                      password="fNLM#D6544nrWGQ",
+                                      host="db.yinuxpufluddvhjoglbm.supabase.co",
+                                      port="5432",
+                                      database="postgres")
 
     def ping(self):
-        query = "select count(*) from tmp"
-        cur = self.__connection.cursor()
-        cur.execute(query)
+        cursor = self.__connection.cursor()
+        # Executing a SQL query
+        cursor.execute("SELECT version();")
+        # Fetch result
+        record = cursor.fetchone()
+        return record
 
-        count = 0
-        for (c) in cur:
-            count = c
-        return count[0]
+    def get_data(self):
+        query = "select * from machine_data"
 
-    def insert_tmp(self, id):
-        query = "INSERT INTO tmp (id) VALUES (%s)"
-        cur = self.__connection.cursor()
-        vales = (id,)
-        cur.execute(query, vales)
-        self.commit()
+        cursor = self.__connection.cursor()
+        cursor.execute(query)
+        # Fetch result
+        records = cursor.fetchall()
 
-    def insert_update(self, id):
-        query = "INSERT INTO tmp (id) VALUES (%s)"
-        cur = self.__connection.cursor()
-        vales = (id,)
-        cur.execute(query, vales)
-        self.commit()
+        data = []
 
-if __name__ == '__main__':
-    db = DatabaseManager()
-    print(db.ping())
-    db.insert_tmp("126378")
-    print(db.ping())
+        for item in records:
+            data.append(item)
+        return data

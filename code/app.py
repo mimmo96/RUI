@@ -1,18 +1,15 @@
 import logging
 import os
-from DatabaseManager import DatabaseManager
 import json
-import requests
 
 from flask import Flask, request, jsonify
 
-from DatabseManager2 import DatabaseManager2
+from DatabaseManager import DatabaseManager
 
 logging.basicConfig(level=logging.DEBUG)
 secret_key = os.urandom(24).hex()
 
 db = DatabaseManager()
-db2 = DatabaseManager2()
 
 app = Flask(__name__)
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = False
@@ -38,9 +35,12 @@ def testpost():
 
 @app.route('/get_data', methods=['GET'])
 def get_data():
-    res = db2.get_data()
-    print(res)
-    return res
+    res = db.get_data()
+    
+    response = jsonify(res)
+    response.status_code = 201 # or 400 or whatever
+
+    return response
 
 @app.route('/testget', methods=['GET'])
 def gestget():

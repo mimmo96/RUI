@@ -5,6 +5,7 @@ services:
   api:
     build:
       context: ./
+    container_name: api
     volumes:
       - ./code:/code
     ports:
