@@ -16,7 +16,7 @@ app.config['JSONIFY_PRETTYPRINT_REGULAR'] = False
 
 @app.route('/')
 def hello_world():
-    return 'Welcome to RUI application!</a>'
+    return 'Welcome to RUI application!!</a>'
 
 @app.route('/testpost', methods=['POST'])
 def testpost():
