@@ -14,18 +14,32 @@ db = DatabaseManager()
 app = Flask(__name__)
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = False
 
+def checkvalue(value):
+    emptyvalues = ["", "''", " ", "' '", None, '""', '" "']
+    
+    if(value in emptyvalues):
+        return False
+
+    return True
+
+def convert_to_json(values):
+    data = [{"ts": a, "asset": b, "items": c, 
+            "working_time": d, "idle_time": e, "power_avg": f,
+            "power_min": g, "power_max": h, "power_working": i,
+            "power_idle": l, "cycle_time": m, "alarm_1": n,
+            "alarm_2": o, "alarm_3": p, "alarm_4": q} for a, b ,c, d, e, f , g, h, i, l ,m, n, o, p ,q in values]
+    
+    return data
+
 @app.route('/')
 def hello_world():
     return 'Welcome to RUI application!</a>'
 
 @app.route('/testpost', methods=['POST'])
 def testpost():
-    #name = request.args.get('name')
-    #surname = request.args.get('surname')
-    #age = request.args.get('age')
+
     data = request.get_json(force=True, silent=True, cache=False) #for get json data
     print(data)
-    #data = [name,surname,age]
 
     response = jsonify(data)
     response.status_code = 201 # or 400 or whatever
@@ -42,18 +56,57 @@ def get_data():
 
     return response
 
-@app.route('/testget', methods=['GET'])
-def gestget():
 
-    #qui facciamo le query al db per prenderci i dati e restituirli in formato json
+# get last n value from database
+@app.route('/get_last_data', methods=['GET'])
+def get_last_data():
 
-    data = ['Meret', 'Di Lorenzo', 'Minjae', 'Jesus', 'Mario Rui', 'Anguissa', 'Lobotka', 'Zielinski', 'Lozano', 'Osimhen', 'Kvaratskhelia']
+    last = request.args.get('n')
+    if(not checkvalue(last)):
+        response = jsonify(['bad request!'])
+        response.status_code = 400
 
-    response = jsonify(data)
-    response.status_code = 200 # or 400 or whatever
-    
+        return response
+
+    #get value from db
+    query = "SELECT * FROM machine_data ORDER BY ts DESC LIMIT " +str(last)
+    cursor = db.get_cursor()
+    cursor.execute(query)
+
+    # Fetch result
+    records = cursor.fetchall()
+
+    response = jsonify(convert_to_json(records))
+    response.status_code = 200
+
     return response
 
+
+#/get_real_time_data?asset=P01&index=5
+@app.route('/get_real_time_data', methods=['GET'])
+def get_real_time_data():
+    asset = request.args.get('asset')
+    index = request.args.get('index')
+    
+    if(not checkvalue(asset) or not checkvalue(index) ):
+        response = jsonify(['bad request!'])
+        response.status_code = 400
+
+        return response
+    
+    #get value from db
+
+    query = "SELECT * FROM machine_data WHERE asset='"+asset+"'" + "LIMIT 1 OFFSET " + str(index)
+    cursor = db.get_cursor()
+    cursor.execute(query)
+
+    # Fetch result
+    records = cursor.fetchall()
+
+    response = jsonify(convert_to_json(records))
+    response.status_code = 200
+
+    return response
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')

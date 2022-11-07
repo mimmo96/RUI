@@ -31,3 +31,6 @@ class DatabaseManager:
         for item in records:
             data.append(item)
         return data
+
+    def get_cursor(self):
+        return self.__connection.cursor()
