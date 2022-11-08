@@ -58,20 +58,21 @@ def get_data():
 
 @app.route('/get_data_range', methods=['GET'])
 def get_data_range():
-    #Example query: ?start_date=2022-09-27%2011%3A55%3A00&end_date=2022-09-29%2011%3A55%3A00]
-    start_date = request.args.get('start_date')
-    end_date = request.args.get('end_date')
+    asset = request.form.get('asset')
+    start_date = request.form.get('start_date')
+    end_date = request.form.get('end_date')
 
     # Check not empty values were passed
-    if (not checkvalue(start_date) or
+    if (not checkvalue(asset) or not checkvalue(start_date) or
         not checkvalue(end_date)):
         response = jsonify(['Bad request!'])
         response.status_code = 400
 
         return response
 
-    query = "SELECT * FROM machine_data WHERE ts >= '" + str(start_date) +\
-            "' AND ts < '" + end_date + "';"
+    query = "SELECT * FROM machine_data WHERE asset LIKE '" + str(asset) +\
+            "' AND ts >= '" + str(start_date) +\
+            "' AND ts < '" + str(end_date) + "';"
 
     cursor = db.get_cursor()
 
@@ -91,17 +92,18 @@ def get_data_range():
 
 @app.route('/get_data_start')
 def get_data_start():
-    # Example query: ?start_date=2022-10-27%2012%3A10%3A0
-
-    start_date = request.args.get('start_date')
+    asset = request.form.get('asset')
+    start_date = request.form.get('start_date')
 
     # Check not empty values were passed
-    if (not checkvalue(start_date)):
+    if (not checkvalue(asset) or
+            not checkvalue(start_date)):
         response = jsonify(['Bad request!'])
         response.status_code = 400
         return response
 
-    query = "SELECT * FROM machine_data WHERE ts >= '" + str(start_date) + "';"
+    query = "SELECT * FROM machine_data WHERE asset LIKE '" + str(asset) +\
+            "' AND ts >= '" + str(start_date) + "';"
 
     cursor = db.get_cursor()
 
