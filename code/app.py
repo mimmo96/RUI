@@ -127,7 +127,7 @@ def get_data_start():
 @app.route('/get_last_data', methods=['GET'])
 def get_last_data():
 
-    last = request.args.get('n')
+    last = request.form.get('n')
     if(not checkvalue(last)):
         response = jsonify(['bad request!'])
         response.status_code = 400
@@ -151,8 +151,8 @@ def get_last_data():
 #/get_real_time_data?asset=P01&index=5
 @app.route('/get_real_time_data', methods=['GET'])
 def get_real_time_data():
-    asset = request.args.get('asset')
-    index = request.args.get('index')
+    asset = request.form.get('asset')
+    index = request.form.get('index')
     
     if(not checkvalue(asset) or not checkvalue(index) ):
         response = jsonify(['bad request!'])
