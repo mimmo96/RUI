@@ -56,6 +56,70 @@ def get_data():
 
     return response
 
+@app.route('/get_data_range', methods=['GET'])
+def get_data_range():
+    #Example query: ?start_date=2022-09-27%2011%3A55%3A00&end_date=2022-09-29%2011%3A55%3A00]
+    start_date = request.args.get('start_date')
+    end_date = request.args.get('end_date')
+
+    # Check not empty values were passed
+    if (not checkvalue(start_date) or
+        not checkvalue(end_date)):
+        response = jsonify(['Bad request!'])
+        response.status_code = 400
+
+        return response
+
+    query = "SELECT * FROM machine_data WHERE ts >= '" + str(start_date) +\
+            "' AND ts < '" + end_date + "';"
+
+    cursor = db.get_cursor()
+
+    try:
+        cursor.execute(query)
+        records = cursor.fetchall()
+    except:
+        # If format is malformed or query doesn't end correctly
+        response = jsonify(['Bad request!'])
+        response.status_code = 400
+        return response
+
+    response = jsonify(convert_to_json(records))
+    response.status_code = 200
+
+    return response
+
+@app.route('/get_data_start')
+def get_data_start():
+    # Example query: ?start_date=2022-10-27%2012%3A10%3A0
+
+    start_date = request.args.get('start_date')
+
+    # Check not empty values were passed
+    if (not checkvalue(start_date)):
+        response = jsonify(['Bad request!'])
+        response.status_code = 400
+        return response
+
+    query = "SELECT * FROM machine_data WHERE ts >= '" + str(start_date) + "';"
+
+    cursor = db.get_cursor()
+
+    try:
+        cursor.execute(query)
+        records = cursor.fetchall()
+    except:
+        # If format is malformed or query doesn't end correctly
+        response = jsonify(['Bad request!'])
+        response.status_code = 400
+        return response
+
+    response = jsonify(convert_to_json(records))
+    response.status_code = 200
+
+    return response
+
+
 
 # get last n value from database
 @app.route('/get_last_data', methods=['GET'])
