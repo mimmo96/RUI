@@ -47,15 +47,6 @@ def testpost():
     return response
     
 
-@app.route('/get_data', methods=['GET'])
-def get_data():
-    res = db.get_data()
-    
-    response = jsonify(res)
-    response.status_code = 201 # or 400 or whatever
-
-    return response
-
 @app.route('/get_data_range', methods=['GET'])
 def get_data_range():
     asset = request.form.get('asset')
@@ -79,6 +70,7 @@ def get_data_range():
     try:
         cursor.execute(query)
         records = cursor.fetchall()
+        cursor.close()
     except:
         # If format is malformed or query doesn't end correctly
         response = jsonify(['Bad request!'])
@@ -110,6 +102,7 @@ def get_data_start():
     try:
         cursor.execute(query)
         records = cursor.fetchall()
+        cursor.close()
     except:
         # If format is malformed or query doesn't end correctly
         response = jsonify(['Bad request!'])
@@ -128,19 +121,28 @@ def get_data_start():
 def get_last_data():
 
     last = request.form.get('n')
-    if(not checkvalue(last)):
+    asset = request.form.get('asset')
+
+    if(not checkvalue(last) or not checkvalue(asset) ):
         response = jsonify(['bad request!'])
         response.status_code = 400
 
         return response
 
     #get value from db
-    query = "SELECT * FROM machine_data ORDER BY ts DESC LIMIT " +str(last)
+    query = "SELECT * FROM machine_data WHERE asset LIKE '" + str(asset) +\
+            "' ORDER BY ts DESC LIMIT " +str(last)
     cursor = db.get_cursor()
-    cursor.execute(query)
-
-    # Fetch result
-    records = cursor.fetchall()
+    
+    try:
+        cursor.execute(query)
+        records = cursor.fetchall()
+        cursor.close()
+    except:
+        # If format is malformed or query doesn't end correctly
+        response = jsonify(['Bad request!'])
+        response.status_code = 400
+        return response
 
     response = jsonify(convert_to_json(records))
     response.status_code = 200
@@ -164,10 +166,16 @@ def get_real_time_data():
 
     query = "SELECT * FROM machine_data WHERE asset='"+asset+"'" + "LIMIT 1 OFFSET " + str(index)
     cursor = db.get_cursor()
-    cursor.execute(query)
-
-    # Fetch result
-    records = cursor.fetchall()
+    
+    try:
+        cursor.execute(query)
+        records = cursor.fetchall()
+        cursor.close()
+    except:
+        # If format is malformed or query doesn't end correctly
+        response = jsonify(['Bad request!'])
+        response.status_code = 400
+        return response
 
     response = jsonify(convert_to_json(records))
     response.status_code = 200

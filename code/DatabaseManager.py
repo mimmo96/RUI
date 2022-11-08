@@ -18,19 +18,5 @@ class DatabaseManager:
         record = cursor.fetchone()
         return record
 
-    def get_data(self):
-        query = "select * from machine_data"
-
-        cursor = self.__connection.cursor()
-        cursor.execute(query)
-        # Fetch result
-        records = cursor.fetchall()
-
-        data = []
-
-        for item in records:
-            data.append(item)
-        return data
-
     def get_cursor(self):
         return self.__connection.cursor()
