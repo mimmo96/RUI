@@ -37,7 +37,6 @@ def hello_world():
 
 @app.route('/testpost', methods=['POST'])
 def testpost():
-
     data = request.get_json(force=True, silent=True, cache=False) #for get json data
     print(data)
 
@@ -49,9 +48,9 @@ def testpost():
 
 @app.route('/get_data_range', methods=['GET'])
 def get_data_range():
-    asset = request.form.get('asset')
-    start_date = request.form.get('start_date')
-    end_date = request.form.get('end_date')
+    asset = request.values.get('asset')
+    start_date = request.values.get('start_date')
+    end_date = request.values.get('end_date')
 
     # Check not empty values were passed
     if (not checkvalue(asset) or not checkvalue(start_date) or
@@ -84,8 +83,8 @@ def get_data_range():
 
 @app.route('/get_data_start')
 def get_data_start():
-    asset = request.form.get('asset')
-    start_date = request.form.get('start_date')
+    asset = request.values.get('asset')
+    start_date = request.values.get('start_date')
 
     # Check not empty values were passed
     if (not checkvalue(asset) or
@@ -119,9 +118,8 @@ def get_data_start():
 # get last n value from database
 @app.route('/get_last_data', methods=['GET'])
 def get_last_data():
-
-    last = request.form.get('n')
-    asset = request.form.get('asset')
+    last = request.values.get('n')
+    asset = request.values.get('asset')
 
     if(not checkvalue(last) or not checkvalue(asset) ):
         response = jsonify(['bad request!'])
@@ -153,8 +151,8 @@ def get_last_data():
 #/get_real_time_data?asset=P01&index=5
 @app.route('/get_real_time_data', methods=['GET'])
 def get_real_time_data():
-    asset = request.form.get('asset')
-    index = request.form.get('index')
+    asset = request.values.get('asset')
+    index = request.values.get('index')
     
     if(not checkvalue(asset) or not checkvalue(index) ):
         response = jsonify(['bad request!'])
