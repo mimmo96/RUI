@@ -21,20 +21,6 @@ def get_data_start():
 
     query = "SELECT * FROM machine_data WHERE asset LIKE '" + str(asset) +\
             "' AND ts >= '" + str(start_date) + "';"
-
-    cursor = db.get_cursor()
-
-    try:
-        cursor.execute(query)
-        records = cursor.fetchall()
-        cursor.close()
-    except:
-        # If format is malformed or query doesn't end correctly
-        response = jsonify(['Bad request!'])
-        response.status_code = 400
-        return response
-
-    response = jsonify(convert_to_json(records))
-    response.status_code = 200
+    response = db.query_db(query)
 
     return response
