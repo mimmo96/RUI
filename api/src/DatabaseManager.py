@@ -1,8 +1,6 @@
 import psycopg2
 
-from flask import jsonify
 from utilities import Singleton
-from utilities.utilities import convert_to_json
 
 class DatabaseManager(metaclass=Singleton.Singleton):
 
@@ -10,7 +8,7 @@ class DatabaseManager(metaclass=Singleton.Singleton):
         print("===> DatabaseManager init")
         self.__connection = psycopg2.connect( user="postgres",
                                               password="fNLM#D6544nrWGQ",
-                                              host="db.yinuxpufluddvhjoglbm.supabase.co",
+                                              host="db",
                                               port="5432",
                                               database="postgres")
 
@@ -24,21 +22,3 @@ class DatabaseManager(metaclass=Singleton.Singleton):
 
     def get_cursor(self):
         return self.__connection.cursor()
-
-    def query_db(self, query):
-        cursor = self.get_cursor()
-
-        try:
-            cursor.execute(query)
-            records = cursor.fetchall()
-            cursor.close()
-        except:
-            # If format is malformed or query doesn't end correctly
-            cursor.close()
-            response = jsonify(['Bad request!'])
-            response.status_code = 400
-            return response
-
-        response = jsonify(convert_to_json(records))
-        response.status_code = 200
-        return response

@@ -20,6 +20,19 @@ def get_real_time_data():
     index = str(values["index"])
 
     query = "SELECT * FROM machine_data WHERE asset='" + asset + "'" + "LIMIT 1 OFFSET " + str(index)
-    response = db.query_db(query)
+    cursor = db.get_cursor()
+
+    try:
+        cursor.execute(query)
+        records = cursor.fetchall()
+        cursor.close()
+    except:
+        # If format is malformed or query doesn't end correctly
+        response = jsonify(['Bad request!'])
+        response.status_code = 400
+        return response
+
+    response = jsonify(convert_to_json(records))
+    response.status_code = 200
 
     return response

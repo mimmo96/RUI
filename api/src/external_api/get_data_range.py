@@ -22,6 +22,20 @@ def get_data_range():
     query = "SELECT * FROM machine_data WHERE asset LIKE '" + str(asset) +\
             "' AND ts >= '" + str(start_date) +\
             "' AND ts < '" + str(end_date) + "';"
-    response = db.query_db(query)
+
+    cursor = db.get_cursor()
+
+    try:
+        cursor.execute(query)
+        records = cursor.fetchall()
+        cursor.close()
+    except:
+        # If format is malformed or query doesn't end correctly
+        response = jsonify(['Bad request!'])
+        response.status_code = 400
+        return response
+
+    response = jsonify(convert_to_json(records))
+    response.status_code = 200
 
     return response

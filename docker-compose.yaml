@@ -4,10 +4,23 @@ services:
 
   api:
     build:
-      context: ./
+      context: ./api
     container_name: api
     volumes:
-      - ./src:/src
+      - ./api/src:/src
     ports:
       - 5001:5000
     restart: always
+    depends_on:
+      - db
+
+  db:
+    build:
+      context: ./db
+    restart: always
+    volumes:
+      - ./db/postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: fNLM#D6544nrWGQ

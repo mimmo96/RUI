@@ -36,5 +36,7 @@ def check_params(request, list_of_params):
     return valid_params,theMap
 
 
+
+
 if __name__ == '__main__':
     print("checkvalue(''):",checkvalue('   '))
