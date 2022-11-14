@@ -1,6 +1,8 @@
+from utilities import Singleton
+
 import requests
 
-class CommunicationManager:
+class CommunicationManager(metaclass=Singleton.Singleton):
     telegram_token_channel = "5704834893:AAE7zKrU7EnubWI1kb4aNa_9pPQerFdrjrM"
 
     def get_users(self):
@@ -16,9 +18,10 @@ class CommunicationManager:
         users = self.get_users()
         for user in users:
             url = "https://api.telegram.org/bot"+self.telegram_token_channel+"/sendMessage?chat_id="+str(user)+"&text="+message
-            requests.get(url)
+            data = requests.get(url)
 
     def send_message(self, user_id, message):
+        import requests
         url = "https://api.telegram.org/bot"+self.telegram_token_channel+"/sendMessage?chat_id="+str(user_id)+"&text="+message
         requests.get(url)
 
@@ -45,4 +48,3 @@ class CommunicationManager:
     def send_contact(self, user_id, phone_number, first_name, last_name):
         url = "https://api.telegram.org/bot"+self.telegram_token_channel+"/sendContact?chat_id="+str(user_id)+"&phone_number="+str(phone_number)+"&first_name="+str(first_name)+"&last_name="+str(last_name)
         requests.get(url)
-

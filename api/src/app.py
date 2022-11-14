@@ -28,6 +28,9 @@ app.register_blueprint(get_last_data_app)
 from external_api.test_post import test_post_app
 app.register_blueprint(test_post_app)
 
+from external_api.communication_apis import communication_app
+app.register_blueprint(communication_app)
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
     print("mammt")
