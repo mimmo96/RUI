@@ -2,7 +2,7 @@ from flask import Blueprint, jsonify, request
 
 test_post_app = Blueprint('test_post_app', __name__)
 
-@test_post_app.route('/testpost', methods=['GET'])
+@test_post_app.route('/testpost', methods=['POST'])
 def testpost():
     data = request.get_json(force=True, silent=True, cache=False)  # for get json data
     print(data)
