@@ -8,7 +8,7 @@ class DatabaseManager(metaclass=Singleton.Singleton):
         print("===> DatabaseManager init")
         self.__connection = psycopg2.connect( user="postgres",
                                               password="fNLM#D6544nrWGQ",
-                                              host="db",    #db.yinuxpufluddvhjoglbm.supabase.co
+                                              host="db.yinuxpufluddvhjoglbm.supabase.co",    #db
                                               port="5432",
                                               database="postgres")
 
@@ -22,3 +22,6 @@ class DatabaseManager(metaclass=Singleton.Singleton):
 
     def get_cursor(self):
         return self.__connection.cursor()
+
+    def commit_changes(self):
+        self.__connection.commit()

@@ -25,6 +25,24 @@ app.register_blueprint(get_real_time_data_app)
 from external_api.get_last_data import get_last_data_app
 app.register_blueprint(get_last_data_app)
 
+from external_api.get_machine_types import get_machine_types_app
+app.register_blueprint(get_machine_types_app)
+
+from external_api.get_machines import get_machines_app
+app.register_blueprint(get_machines_app)
+
+from external_api.get_part_programs import get_part_programs_app
+app.register_blueprint(get_part_programs_app)
+
+from external_api.save_machine import save_machine_app
+app.register_blueprint(save_machine_app)
+
+from external_api.save_part_program import save_part_program_app
+app.register_blueprint(save_part_program_app)
+
+from external_api.save_machine_type import save_machine_type_app
+app.register_blueprint(save_machine_type_app)
+
 from external_api.test_post import test_post_app
 app.register_blueprint(test_post_app)
 
