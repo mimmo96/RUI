@@ -24,8 +24,6 @@ def save_part_program():
     query = "INSERT INTO part_programs (part_program, machine_asset) VALUES ('" + \
             part_program + "', '" + asset + "');"
 
-
-
     try:
         cursor = db.get_cursor()
         cursor.execute(query)

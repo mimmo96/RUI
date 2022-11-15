@@ -18,7 +18,7 @@ def get_part_programs():
 
     asset = str(values['asset'])
 
-    query = "SELECT * FROM part_programs WHERE asset LIKE '" + str(asset) +\
+    query = "SELECT * FROM part_programs WHERE machine_asset LIKE '" + str(asset) +\
             "';"
 
     cursor = db.get_cursor()
@@ -34,7 +34,7 @@ def get_part_programs():
         response.status_code = 400
         return response
 
-    response = jsonify(convert_to_json(records))
+    response = jsonify(records)
     response.status_code = 200
 
     return response

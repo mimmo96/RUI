@@ -24,7 +24,7 @@ def get_machine_types():
         response.status_code = 400
         return response
 
-    response = jsonify(convert_to_json(records))
+    response = jsonify(records)
     response.status_code = 200
 
     return response

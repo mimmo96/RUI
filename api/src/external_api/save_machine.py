@@ -21,10 +21,10 @@ def save_machine():
 
     query = "SELECT * FROM machines WHERE asset LIKE '" + str(asset) + "';"
     cursor = db.get_cursor()
+
     try:
         cursor.execute(query)
         records = cursor.fetchall()
-        cursor.close()
     except:
         # If format is malformed or query doesn't end correctly
         cursor.close()
