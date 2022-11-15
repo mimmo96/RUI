@@ -34,6 +34,12 @@ app.register_blueprint(communication_app)
 from external_api.get_messages_from_ml import messages_from_ml_app
 app.register_blueprint(messages_from_ml_app)
 
+from external_api.get_statistics import statistics_from_ml_app
+app.register_blueprint(statistics_from_ml_app)
+
+from external_api.post_new_data_to_ml import new_data_to_ml_app
+app.register_blueprint(new_data_to_ml_app)
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
     print("mammt")
