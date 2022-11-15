@@ -20,6 +20,7 @@ def save_machine():
     machine_type = str(values['machine_type'])
 
     query = "SELECT * FROM machines WHERE asset LIKE '" + str(asset) + "';"
+
     cursor = db.get_cursor()
 
     try:
