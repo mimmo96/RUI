@@ -11,20 +11,13 @@ get_machines_app = Blueprint('get_machines_app', __name__)
 def get_machines():
     query = "SELECT * FROM machines;"
 
-    cursor = db.get_cursor()
+    records = db.query(query)
 
-    try:
-        cursor.execute(query)
-        records = cursor.fetchall()
-        cursor.close()
-    except:
-        # If format is malformed or query doesn't end correctly
-        cursor.close()
+    if str(records).upper() != "ERROR":
+        response = jsonify(records)
+        response.status_code = 200
+    else:
         response = jsonify(['Bad request!'])
         response.status_code = 400
-        return response
-
-    response = jsonify(records)
-    response.status_code = 200
 
     return response

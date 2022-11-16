@@ -25,7 +25,7 @@ def get_test():
         end_date = pd.to_datetime(str(values['end_date']))
         part_program = int(values['part_program'])
 
-        response = jsonify(get_statistics(start_date,end_date,part_program))
+        response = jsonify(get_statistics(start_date, end_date, part_program))
         response.status_code = 200
 
     except:

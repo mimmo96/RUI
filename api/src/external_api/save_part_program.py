@@ -21,23 +21,15 @@ def save_part_program():
     asset = str(values['asset'])
     part_program = str(values['part_program'])
 
-    query = "INSERT INTO part_programs (part_program, machine_asset) VALUES ('" + \
-            part_program + "', '" + asset + "');"
+    query = "INSERT INTO part_programs (part_program, machine_asset) VALUES (%s, %s);"
 
-    cursor = db.get_cursor()
+    records = db.command(query, (part_program, asset))
 
-    try:
-        cursor.execute(query)
-        db.commit_changes()
-        cursor.close()
-    except:
-        # If format is malformed or query doesn't end correctly
-        cursor.close()
+    if str(records).upper() != "ERROR":
+        response = jsonify(['Data correctly saved into DB'])
+        response.status_code = 200
+    else:
         response = jsonify(['Bad request!'])
         response.status_code = 400
-        return response
-
-    response = jsonify(['Data correctly saved into DB'])
-    response.status_code = 200
 
     return response

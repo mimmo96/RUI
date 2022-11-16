@@ -19,38 +19,27 @@ def save_machine():
     asset = str(values['asset'])
     machine_type = str(values['machine_type'])
 
-    query = "SELECT * FROM machines WHERE asset LIKE '" + str(asset) + "';"
+    query = "SELECT * FROM machines WHERE asset LIKE %s;"
 
-    cursor = db.get_cursor()
+    records = db.query(query, (asset,))
 
-    try:
-        cursor.execute(query)
-        records = cursor.fetchall()
-    except:
-        # If format is malformed or query doesn't end correctly
-        cursor.close()
+    if str(records).upper() == "ERROR":
         response = jsonify(['Bad request!'])
         response.status_code = 400
         return response
 
     if not len(records):
-        query = "INSERT INTO machines (machine_type, asset) VALUES ('" + \
-            machine_type + "', '" + asset + "');"
+        query = "INSERT INTO machines (machine_type, asset) VALUES (%s, %s);"
 
-        try:
-            cursor.execute(query)
-            db.commit_changes()
-            cursor.close()
-        except:
-            # If format is malformed or query doesn't end correctly
-            cursor.close()
+        records = db.command(query, (machine_type, asset))
+
+        if str(records).upper() != "ERROR":
+            response = jsonify(['Data correctly saved into DB'])
+            response.status_code = 200
+        else:
             response = jsonify(['Bad request!'])
             response.status_code = 400
-            return response
 
-
-        response = jsonify(['Data correctly saved into DB'])
-        response.status_code = 200
     else:
         response = jsonify(['Asset already present in DB'])
         response.status_code = 400

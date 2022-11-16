@@ -20,21 +20,15 @@ def get_last_data():
     asset = str(values['asset'])
 
     # get value from db
-    query = "SELECT * FROM machine_data WHERE asset LIKE '" + str(asset) + \
-            "' ORDER BY ts DESC LIMIT " +str(last)
-    cursor = db.get_cursor()
+    query = "SELECT * FROM machine_data WHERE asset LIKE %s ORDER BY ts DESC LIMIT %s;"
 
-    try:
-        cursor.execute(query)
-        records = cursor.fetchall()
-        cursor.close()
-    except:
-        # If format is malformed or query doesn't end correctly
+    records = db.query(query, (asset, last))
+
+    if str(records).upper() != "ERROR":
+        response = jsonify(records)
+        response.status_code = 200
+    else:
         response = jsonify(['Bad request!'])
         response.status_code = 400
-        return response
-
-    response = jsonify(convert_to_json(records))
-    response.status_code = 200
 
     return response

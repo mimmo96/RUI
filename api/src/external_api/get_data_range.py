@@ -19,23 +19,16 @@ def get_data_range():
     start_date = str(values['start_date'])
     end_date = str(values['end_date'])
 
-    query = "SELECT * FROM machine_data WHERE asset LIKE '" + str(asset) +\
-            "' AND ts >= '" + str(start_date) +\
-            "' AND ts < '" + str(end_date) + "';"
+    query = "SELECT * FROM machine_data WHERE asset LIKE %s AND " \
+            "ts >= %s AND ts < %s;"
 
-    cursor = db.get_cursor()
+    records = db.query(query, (asset, start_date, end_date))
 
-    try:
-        cursor.execute(query)
-        records = cursor.fetchall()
-        cursor.close()
-    except:
-        # If format is malformed or query doesn't end correctly
+    if str(records).upper() != "ERROR":
+        response = jsonify(records)
+        response.status_code = 200
+    else:
         response = jsonify(['Bad request!'])
         response.status_code = 400
-        return response
-
-    response = jsonify(convert_to_json(records))
-    response.status_code = 200
 
     return response

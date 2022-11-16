@@ -20,25 +20,15 @@ def save_machine_type():
 
     machine_type = str(values['machine_type'])
 
-    query = "INSERT INTO machine_types (name) VALUES ('" + \
-            machine_type + "') RETURNING id;"
+    query = "INSERT INTO machine_types (name) VALUES (%s) RETURNING id;"
 
-    cursor = db.get_cursor()
-    id = None
+    records = db.command(query, (machine_type,), fetch = True)
 
-    try:
-        cursor.execute(query)
-        id = cursor.fetchone()[0]
-        db.commit_changes()
-        cursor.close()
-    except:
-        # If format is malformed or query doesn't end correctly
-        cursor.close()
+    if str(records).upper() != "ERROR":
+        response = jsonify({'id': records})
+        response.status_code = 200
+    else:
         response = jsonify(['Bad request!'])
         response.status_code = 400
-        return response
-
-    response = jsonify({'id': id})
-    response.status_code = 200
 
     return response
