@@ -11,7 +11,7 @@ db = DatabaseManager()
 @statistics_from_ml_app.route('/get_statistics', methods=['GET'])
 def get_test():
 
-    params_list = ["asset", "start_date", "end_date", "part_program"]
+    params_list = ["asset", "start_date", "end_date", "part_program", "num_items"]
     valid_parameters, values = check_params(request, params_list)
     
     if not valid_parameters:
@@ -23,9 +23,10 @@ def get_test():
         asset = str(values['asset'])
         start_date = pd.to_datetime(str(values['start_date']))
         end_date = pd.to_datetime(str(values['end_date']))
-        part_program = int(values['part_program'])
+        part_program = str(values['part_program'])
+        num_items = int(values['num_items'])
 
-        response = jsonify(get_statistics(start_date, end_date, part_program))
+        response = jsonify(get_statistics(start_date, end_date, part_program,asset,num_items))
         response.status_code = 200
 
     except:

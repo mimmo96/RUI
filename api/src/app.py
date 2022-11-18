@@ -49,9 +49,6 @@ app.register_blueprint(test_post_app)
 from external_api.communication_apis import communication_app
 app.register_blueprint(communication_app)
 
-from external_api.get_messages_from_ml import messages_from_ml_app
-app.register_blueprint(messages_from_ml_app)
-
 from external_api.get_statistics import statistics_from_ml_app
 app.register_blueprint(statistics_from_ml_app)
 
