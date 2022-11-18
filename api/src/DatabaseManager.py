@@ -8,7 +8,7 @@ class DatabaseManager(metaclass=Singleton.Singleton):
         print("===> DatabaseManager init")
         self.__connection = psycopg2.connect( user="postgres",
                                               password="fNLM#D6544nrWGQ",
-                                              host="db.yinuxpufluddvhjoglbm.supabase.co",    #db
+                                              host="db",    #db.yinuxpufluddvhjoglbm.supabase.co
                                               port="5432",
                                               database="postgres")
 
