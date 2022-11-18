@@ -7,7 +7,7 @@ from utilities.utilities import checkvalue, convert_to_json, check_params
 
 get_machine_types_app = Blueprint('get_machine_types_app', __name__)
 
-@get_machine_types_app.route('/get_machine_types')
+@get_machine_types_app.route('/get_machine_types', methods=['GET'])
 def get_machine_types():
     query = "SELECT * FROM machine_types;"
 

@@ -9,7 +9,7 @@ from utilities.utilities import checkvalue, convert_to_json, check_params
 save_part_program_app = Blueprint('save_part_program_app', __name__)
 
 
-@save_part_program_app.route('/save_part_program')
+@save_part_program_app.route('/save_part_program', methods=['POST'])
 def save_part_program():
     params_list = ["asset", "part_program"]
     valid_parameters, values = check_params(request, params_list)

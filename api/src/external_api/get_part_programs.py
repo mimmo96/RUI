@@ -7,7 +7,7 @@ from utilities.utilities import checkvalue, convert_to_json, check_params
 
 get_part_programs_app = Blueprint('get_part_programs_app', __name__)
 
-@get_part_programs_app.route('/get_part_programs')
+@get_part_programs_app.route('/get_part_programs', methods=['GET'])
 def get_part_programs():
     params_list = ["asset"]
     valid_parameters, values = check_params(request, params_list)

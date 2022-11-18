@@ -7,7 +7,7 @@ from utilities.utilities import checkvalue, convert_to_json, check_params
 
 save_machine_app = Blueprint('save_machine_app', __name__)
 
-@save_machine_app.route('/save_machine')
+@save_machine_app.route('/save_machine', methods=['POST'])
 def save_machine():
     params_list = ["asset", "machine_type"]
     valid_parameters, values = check_params(request, params_list)
