@@ -20,15 +20,29 @@ def save_machine_type():
 
     machine_type = str(values['machine_type'])
 
-    query = "INSERT INTO machine_types (name) VALUES (%s) RETURNING id;"
+    query = "SELECT * FROM machine_types WHERE name LIKE %s;"
 
-    records = db.command(query, (machine_type,), fetch = True)
+    records = db.query(query, (machine_type,))
 
-    if str(records).upper() != "ERROR":
-        response = jsonify({'id': records})
-        response.status_code = 200
-    else:
+    if str(records).upper() == "ERROR":
         response = jsonify(['Bad request!'])
+        response.status_code = 400
+        return response
+
+    if not len(records):
+        query = "INSERT INTO machine_types (name) VALUES (%s) RETURNING id;"
+
+        records = db.command(query, (machine_type,), fetch=True)
+
+        if str(records).upper() != "ERROR":
+            response = jsonify({'id': records})
+            response.status_code = 200
+        else:
+            response = jsonify(['Bad request!'])
+            response.status_code = 400
+
+    else:
+        response = jsonify(['Machine type already present in DB'])
         response.status_code = 400
 
     return response
