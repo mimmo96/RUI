@@ -20,7 +20,7 @@ def get_data_range():
     end_date = str(values['end_date'])
 
     query = "SELECT * FROM machine_data WHERE asset LIKE %s AND " \
-            "ts >= %s AND ts < %s;"
+            "ts >= %s AND ts < %s ORDER BY ts;"
 
     records = db.query(query, (asset, start_date, end_date))
 

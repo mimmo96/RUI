@@ -19,7 +19,7 @@ def get_data_start():
     asset = str(values['asset'])
     start_date = str(values['start_date'])
 
-    query = "SELECT * FROM machine_data WHERE asset LIKE %s AND ts >= %s;"
+    query = "SELECT * FROM machine_data WHERE asset LIKE %s AND ts >= %s ORDER BY ts;"
 
     records = db.query(query, (asset, start_date))
 
