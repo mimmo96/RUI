@@ -25,7 +25,7 @@ def get_last_data():
     records = db.query(query, (asset, last))
 
     if str(records).upper() != "ERROR":
-        response = jsonify(records)
+        response = jsonify(convert_to_json(records))
         response.status_code = 200
     else:
         response = jsonify(['Bad request!'])

@@ -25,7 +25,7 @@ def get_data_range():
     records = db.query(query, (asset, start_date, end_date))
 
     if str(records).upper() != "ERROR":
-        response = jsonify(records)
+        response = jsonify(convert_to_json(records))
         response.status_code = 200
     else:
         response = jsonify(['Bad request!'])

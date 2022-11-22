@@ -14,7 +14,7 @@ def get_machine_types():
     records = db.query(query)
 
     if str(records).upper() != "ERROR":
-        response = jsonify(records)
+        response = jsonify(convert_to_json(records))
         response.status_code = 200
     else:
         response = jsonify(['Bad request!'])
