@@ -14,7 +14,8 @@ def get_machines():
     records = db.query(query)
 
     if str(records).upper() != "ERROR":
-        response = jsonify(convert_to_json(records))
+        data = [{"machine_type": a, "asset": b} for a, b in records]
+        response = jsonify(data)
         response.status_code = 200
     else:
         response = jsonify(['Bad request!'])

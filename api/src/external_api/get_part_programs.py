@@ -23,7 +23,8 @@ def get_part_programs():
     records = db.query(query, (asset,))
 
     if str(records).upper() != "ERROR":
-        response = jsonify(convert_to_json(records))
+        data = [{"part_program": a, "machine_asset": b} for a, b in records]
+        response = jsonify(data)
         response.status_code = 200
     else:
         response = jsonify(['Bad request!'])
