@@ -18,6 +18,7 @@ services:
     build:
       context: ./db
     restart: always
+    container_name: db
     volumes:
       - ./db/postgres_data:/var/lib/postgresql/data
     ports:
