@@ -52,6 +52,12 @@ app.register_blueprint(communication_app)
 from external_api.get_statistics import statistics_from_ml_app
 app.register_blueprint(statistics_from_ml_app)
 
+from external_api.get_data_session import get_data_session_app
+app.register_blueprint(get_data_session_app)
+
+from external_api.get_data_part_program import get_data_part_program_app
+app.register_blueprint(get_data_part_program_app)
+
 from external_api.post_new_data_to_ml import new_data_to_ml_app
 app.register_blueprint(new_data_to_ml_app)
 
@@ -60,6 +66,5 @@ app.register_blueprint(save_machine_and_machinetype_app)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
-    print("mammt")
     
     
