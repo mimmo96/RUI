@@ -13,12 +13,39 @@ def checkvalue(value: str) -> bool:
 
 def convert_to_json(values):
   
-    data = [{"session": a, "part_program": b, "incremental_power_avg": c,
-             "incremental_items_avg": d, "incremental_cycle_time_avg": e, "power_var": f,
-             "cycle_var": g, "asset": h, "items": i,
-             "working_time": l, "idle_time": m, "power_avg": n,
-             "power_min": o, "power_max": p, "power_working": q, "power_idle": r, "cycle_time": s,
-             "alarm_1": t,'alarm_2': u ,'alarm_3': v ,'alarm_4': w ,'part_program_y': x ,'predicted_alarm': y ,'ts': z} for a, b, c, d, e, f, g, h, i, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z in values]
+    data = [{"session": session,
+             "part_program": part_program,
+             "incremental_power_avg": incremental_power_avg,
+             "incremental_items_avg": incremental_items_avg,
+             "incremental_cycle_time_avg": incremental_cycle_time_avg,
+             "incremental_power": incremental_power,
+             "incremental_energy_cost": incremental_energy_cost,
+             "power_var": power_var,
+             "cycle_var": cycle_var,
+             "asset": asset,
+             "items": items,
+             "working_time": working_time,
+             "idle_time": idle_time,
+             "power_avg": power_avg,
+             "power_min": power_min, "power_max": power_max, "power_working": power_working,
+             "power_idle": power_idle, "cycle_time": cycle_time,
+             "alarm_1": alarm_1,'alarm_2': alarm_2 ,'alarm_3': alarm_3 ,'alarm_4': alarm_4 ,
+             'predicted_alarm': predicted_alarm ,
+             'ts': ts,
+             'energy_cost': energy_cost
+             }
+            for session, part_program,
+                incremental_power_avg,
+                incremental_items_avg,
+                incremental_cycle_time_avg,
+                incremental_power, incremental_energy_cost,
+                power_var,
+                cycle_var, asset,
+                items, working_time,
+                idle_time, power_avg,
+                power_min, power_max,
+                power_working, power_idle, cycle_time,
+                alarm_1, alarm_2, alarm_3, alarm_4, predicted_alarm, ts, energy_cost in values]
 
     return data
 
