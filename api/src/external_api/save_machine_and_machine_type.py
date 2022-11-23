@@ -8,7 +8,6 @@ db = DatabaseManager()
 save_machine_and_machinetype_app = Blueprint('save_machine_and_machinetype_app', __name__)
 @save_machine_and_machinetype_app.route('/save_machine_and_machine_type', methods=['GET'])
 def save_machine_and_machine_type():
-
     global response
     params_list = ["asset", "machine_type"]
     valid_parameters, values = check_params(request, params_list)
@@ -20,22 +19,45 @@ def save_machine_and_machine_type():
     asset = str(values['asset'])
     machine_type = str(values['machine_type'])
 
+    query = "SELECT * FROM machine_types WHERE name LIKE %s;"
+
+    records = db.query(query, (machine_type,))
+
+    if str(records).upper() == "ERROR":
+        response = jsonify(['Bad request! 1'])
+        response.status_code = 400
+        return response
+
+    if not len(records):
+        query = "INSERT INTO machine_types (name) VALUES (%s) RETURNING id;"
+
+        records = db.command(query, (machine_type,), fetch=True)
+
+        id = records
+        if str(records).upper() == "ERROR":
+            response = jsonify(['Bad request! 2'])
+            response.status_code = 400
+            return response
+    else:
+        id = records[0][1]
+    ## Fase 2
+
     query = "SELECT * FROM machines WHERE asset LIKE %s;"
 
     records = db.query(query, (asset,))
 
     if str(records).upper() == "ERROR":
-        response = jsonify(['Bad request!'])
+        response = jsonify(['Bad request! 3'])
         response.status_code = 400
         return response
 
     if not len(records):
         query = "INSERT INTO machines (machine_type, asset) VALUES (%s, %s);"
 
-        records = db.command(query, (machine_type, asset))
+        records = db.command(query, (id, asset))
 
         if str(records).upper() == "ERROR":
-            response = jsonify(['Bad request!'])
+            response = jsonify(['Bad request! 4'])
             response.status_code = 400
             return response
 
@@ -45,25 +67,6 @@ def save_machine_and_machine_type():
 
 
 
-
-    query = "SELECT * FROM machine_types WHERE name LIKE %s;"
-
-    records = db.query(query, (machine_type,))
-
-    if str(records).upper() == "ERROR":
-        response = jsonify(['Bad request!'])
-        response.status_code = 400
-        return response
-
-    if not len(records):
-        query = "INSERT INTO machine_types (name) VALUES (%s) RETURNING id;"
-
-        records = db.command(query, (machine_type,), fetch=True)
-
-        if str(records).upper() == "ERROR":
-            response = jsonify(['Bad request!'])
-            response.status_code = 400
-            return response
 
     response = jsonify(['Machine and machine type saved successfully'])
     response.status_code = 201
