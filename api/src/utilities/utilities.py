@@ -12,11 +12,13 @@ def checkvalue(value: str) -> bool:
     return True
 
 def convert_to_json(values):
-    data = [{"ts": a, "asset": b, "items": c,
-             "working_time": d, "idle_time": e, "power_avg": f,
-             "power_min": g, "power_max": h, "power_working": i,
-             "power_idle": l, "cycle_time": m, "alarm_1": n,
-             "alarm_2": o, "alarm_3": p, "alarm_4": q} for a, b, c, d, e, f, g, h, i, l, m, n, o, p, q in values]
+  
+    data = [{"session": a, "part_program": b, "incremental_power_avg": c,
+             "incremental_items_avg": d, "incremental_cycle_time_avg": e, "power_var": f,
+             "cycle_var": g, "asset": h, "items": i,
+             "working_time": l, "idle_time": m, "power_avg": n,
+             "power_min": o, "power_max": p, "power_working": q, "power_idle": r, "cycle_time": s,
+             "alarm_1": t,'alarm_2': u ,'alarm_3': v ,'alarm_4': w ,'part_program_y': x ,'predicted_alarm': y ,'ts': z} for a, b, c, d, e, f, g, h, i, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z in values]
 
     return data
 
