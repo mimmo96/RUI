@@ -58,8 +58,8 @@ def get_statistics(df, part_program, num_items: int):
     consumes = consumes.rename(columns={'index': 'Stats'})
 
     output = pd.DataFrame(stats[['Stats', 'pow_work_item', 'pow_avg_item']]).set_index('Stats')
+    output['minutes'] = (items/stats['items_min']).iloc[:].values
     output = output.to_json()
-    output = output[:-1] + ', "minutes":{"mean":' + str(consumes.iloc[3]['mean']) + '}}'
 
     return output
 
