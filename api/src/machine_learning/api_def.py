@@ -58,38 +58,12 @@ def get_statistics(df, part_program, num_items: int):
     consumes = consumes.rename(columns={'index': 'Stats'})
 
     output = pd.DataFrame(stats[['Stats', 'pow_work_item', 'pow_avg_item']]).set_index('Stats')
-    print(output)
+    output = output.to_json()
+    output = output[:-1] + ', "minutes":{"mean":' + str(consumes.iloc[3]['mean']) + '}}'
 
-    return output.to_json()
+    return output
 
-    output = []
-    for index, row in stats.iterrows():
-        output.append(str(row))
 
-    # return output
-
-    return [stats.to_json(orient="records"), consumes.to_json(orient="records")]
-
-    return [
-        {"Stats": "mean", "items_min": 2.9983193277, "pow_work_item": 809.4861690011, "pow_idle_item": 0.0,
-         "pow_avg_item": 808.8481652661, "pow_max_item": 3774.4410784314, "pow_min_item": 94.4581938375},
-        {"Stats": "std", "items_min": 0.0579771036, "pow_work_item": 59.9560920919, "pow_idle_item": 0.0,
-         "pow_avg_item": 42.8009710656, "pow_max_item": 354.2711525155, "pow_min_item": 9.2896743181},
-        {"Stats": "min", "items_min": 1.0, "pow_work_item": 691.268, "pow_idle_item": 0.0, "pow_avg_item": 691.27,
-         "pow_max_item": 2745.67, "pow_min_item": 81.67},
-        {"Stats": "25%", "items_min": 3.0, "pow_work_item": 787.3575, "pow_idle_item": 0.0,
-         "pow_avg_item": 787.3566666667, "pow_max_item": 3570.1333333333, "pow_min_item": 89.448},
-        {"Stats": "50%", "items_min": 3.0, "pow_work_item": 809.812, "pow_idle_item": 0.0,
-         "pow_avg_item": 809.8116666667, "pow_max_item": 3706.2666666667, "pow_min_item": 93.3373333333},
-        {"Stats": "75%", "items_min": 3.0, "pow_work_item": 827.59, "pow_idle_item": 0.0, "pow_avg_item": 827.59,
-         "pow_max_item": 3993.0916666667, "pow_min_item": 97.2263333333},
-        {"Stats": "max", "items_min": 3.0, "pow_work_item": 2576.178, "pow_idle_item": 0.0, "pow_avg_item": 1822.18,
-         "pow_max_item": 10920.5, "pow_min_item": 326.68},
-        {"Stats": "pow_work_item", "mean": 80948.6169001121},
-        {"Stats": "pow_idle_item", "mean": 0.0},
-        {"Stats": "pow_avg_item", "mean": 80884.8165266106},
-        {"Stats": "minutes", "mean": 33.3520179372}
-    ]
 
 
 '''
