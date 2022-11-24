@@ -25,3 +25,21 @@ services:
       - "5432:5432"
     environment:
       POSTGRES_PASSWORD: fNLM#D6544nrWGQ
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: frontend
+    volumes:
+      - ./frontend/code/public:/code/public
+      - ./frontend/code/src:/code/src
+      - ./frontend/code/package.json:/code/package.json
+      - ./frontend/code/package-lock.json:/code/package-lock.json
+    ports:
+      - "3000:3000"
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
+      - PUBLIC_URL=http://localhost:3000
+    depends_on:
+      - api
