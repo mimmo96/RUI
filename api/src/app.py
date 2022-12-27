@@ -64,6 +64,12 @@ app.register_blueprint(new_data_to_ml_app)
 from external_api.save_machine_and_machine_type import save_machine_and_machinetype_app
 app.register_blueprint(save_machine_and_machinetype_app)
 
+from external_api.get_shifts import get_shifts_app
+app.register_blueprint(get_shifts_app)
+
+from external_api.save_shifts_costs import save_shifts_costs_app
+app.register_blueprint(save_shifts_costs_app)
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
     
