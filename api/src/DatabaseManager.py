@@ -58,6 +58,8 @@ class DatabaseManager(metaclass=Singleton.Singleton):
         except:
             # If format is malformed or query doesn't end correctly
             feedback = "ERROR"
+            cursor.execute("ROLLBACK")
+            self.commit_changes()
         finally:
             cursor.close()
 
