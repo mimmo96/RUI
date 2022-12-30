@@ -1,6 +1,5 @@
 // project import
 import Routes from 'routes';
-import React from 'react';
 import ThemeCustomization from 'themes';
 import ScrollTop from 'components/ScrollTop';
 
@@ -9,8 +8,7 @@ import ScrollTop from 'components/ScrollTop';
 const App = () => (
     <ThemeCustomization>
         <ScrollTop>
-            <Routes>
-            </Routes>
+            <Routes />
         </ScrollTop>
     </ThemeCustomization>
 );

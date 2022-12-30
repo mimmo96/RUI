@@ -9,7 +9,6 @@ from '@mui/material';
 
 // project import
 import MainCard from 'components/MainCard';
-import OrdersTable from 'pages/dashboard/OrdersTable';
 
 import { useState, useEffect } from 'react';
 

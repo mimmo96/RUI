@@ -10,8 +10,9 @@ const DashboardDefault = Loadable(lazy(() => import('pages/dashboard')));
 // render - sample page
 const SamplePage = Loadable(lazy(() => import('pages/extra-pages/SamplePage')));
 
-const DataHistory = Loadable(lazy(() => import('pages/rui/DataHistory')));
+const DataHistory = Loadable(lazy(() => import('pages/rui/data-history/DataHistory')));
 const RealTimeMonitoring = Loadable(lazy(() => import('pages/rui/RealTimeMonitoring')));
+const Calculator = Loadable(lazy(() => import('pages/rui/Calculator')));
 const Settings = Loadable(lazy(() => import('pages/rui/Settings')));
 const Customization = Loadable(lazy(() => import('pages/rui/Customization')));
 
@@ -42,6 +43,10 @@ const MainRoutes = {
         {
             path: 'realtime',
             element: <RealTimeMonitoring />
+        },
+        {
+            path: 'calculator',
+            element: <Calculator />
         },
         {
             path: 'settings',

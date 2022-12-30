@@ -21,8 +21,19 @@ import { RiseOutlined, FallOutlined } from '@ant-design/icons';
 
 
 
-function AnalyticEcommerce ({ id, color, title, count, percentage, isLoss, type, extra }) {
+function AnalyticEcommerce ({ id, color, analytics, title, count, percentage, type, isLoss, extra, isActivity}) {
     const [context_menu, setContextMenu] = useState(null);
+    const [color_card, setColorCard] = useState("#ffffff");
+
+    var value = count / 100;
+    var r = 255;
+    var g = 255;
+    var b = 255;
+    if(isActivity){
+      r = Math.min(255, 255 - (value-0.5)*510);
+      g = Math.min(255, (value)*510);
+      b = 0;
+    }
 
     const handleClose = () => {
         setContextMenu(null);
@@ -41,7 +52,7 @@ function AnalyticEcommerce ({ id, color, title, count, percentage, isLoss, type,
     };
 
   return <div id={id}>
-    <MainCard onContextMenu={handleContextMenu} contentSX={{ p: 2.25 }}>
+    <MainCard sx={{backgroundColor: 'rgba('+r+', '+g+', '+b+',0.3)'}} onContextMenu={handleContextMenu} contentSX={{ p: 2.25 }}>
         <Menu
             open={context_menu !== null}
             onClose={handleClose}
@@ -61,7 +72,7 @@ function AnalyticEcommerce ({ id, color, title, count, percentage, isLoss, type,
             </Typography>
             <Grid container alignItems="center">
                 <Grid item>
-                    <Typography variant="h4" color="inherit">
+                    <Typography variant="h4" color="inherit" sx={{fontWeight: 'bolder'}}>
                         {count}
                     </Typography>
                 </Grid>
@@ -84,15 +95,15 @@ function AnalyticEcommerce ({ id, color, title, count, percentage, isLoss, type,
                 )}
             </Grid>
         </Stack>
-        <Box sx={{ pt: 2.25 }}>
+        {analytics &&  <Box sx={{ pt: 2.25 }}>
             <Typography variant="caption" color="textSecondary">
                 You {type} an extra{' '}
-                <Typography component="span" variant="caption" sx={{ color: `${color || 'primary'}.main` }}>
+                <Typography component="span" variant="caption" sx={{ color: `${color || 'primary'}.main`}}>
                     {extra}
                 </Typography>{' '}
-                this month
+                during last turn
             </Typography>
-        </Box>
+        </Box>}
     </MainCard>
   </div>
 }

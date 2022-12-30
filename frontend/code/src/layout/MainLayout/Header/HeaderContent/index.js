@@ -2,8 +2,9 @@
 import { Box, Button, IconButton, Link, useMediaQuery } from '@mui/material';
 import { GithubOutlined, FilePdfFilled} from '@ant-design/icons';
 import {exportToPDF} from "../../../../utils/utilsPdf";
+
 // project import
-import Search from './Search';
+import HeadsUp from './HeadsUp';
 import Profile from './Profile';
 import Notification from './Notification';
 import MobileSection from './MobileSection';
@@ -15,7 +16,7 @@ const HeaderContent = () => {
 
     return (
         <>
-            {!matchesXs && <Search />}
+            {!matchesXs && <HeadsUp />}
             {matchesXs && <Box sx={{ width: '100%', ml: 1 }} />}
 
             {/*

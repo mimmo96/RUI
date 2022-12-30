@@ -1,10 +1,11 @@
 // assets
-import { HistoryOutlined, StockOutlined } from '@ant-design/icons';
+import { HistoryOutlined, StockOutlined, CalculatorOutlined } from '@ant-design/icons';
 
 // icons
 const icons = {
     HistoryOutlined,
-    StockOutlined
+    StockOutlined,
+    CalculatorOutlined
 };
 
 const factory = {
@@ -18,14 +19,23 @@ const factory = {
             type: 'item',
             url: '/history',
             icon: icons.HistoryOutlined,
-            breadcrumbs: false
+            breadcrumbs: false,
         },
         {
             id: 'realtime',
             title: 'Real-time Monitoring',
             type: 'item',
             url: '/realtime',
+            target: 1,
             icon: icons.StockOutlined,
+            breadcrumbs: false
+        },
+        {
+            id: 'calculator',
+            title: 'Resources Calculator',
+            type: 'item',
+            url: '/calculator',
+            icon: icons.CalculatorOutlined,
             breadcrumbs: false
         }
     ]
