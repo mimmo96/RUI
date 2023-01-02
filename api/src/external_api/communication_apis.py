@@ -24,3 +24,42 @@ def get_data_range():
     response = jsonify("Message sent")
     response.status_code = 200
     return response
+
+@communication_app.route('/send_app_notification_workers', methods=['GET'])
+def send_app_notification_workers():
+    from CommunicationManager import CommunicationManager
+    communication = CommunicationManager()
+
+    params_list = ["message"]
+    valid_parameters, values = check_params(request, params_list)
+    if not valid_parameters:
+        response = jsonify(['Precondition failed: parameters are not valid'])
+        response.status_code = 412
+        return response
+
+    message = str(values['message'])
+    communication.send_broadcast_app_notifications_workers(message)
+
+    response = jsonify("Message sent")
+    response.status_code = 200
+    return response
+
+@communication_app.route('/add_task_worker', methods=['GET'])
+def add_task_worker():
+    from CommunicationManager import CommunicationManager
+    communication = CommunicationManager()
+
+    params_list = ["task_desc","worker"]
+    valid_parameters, values = check_params(request, params_list)
+    if not valid_parameters:
+        response = jsonify(['Precondition failed: parameters are not valid'])
+        response.status_code = 412
+        return response
+
+    message = str(values['message'])
+    worker = str(values['worker'])
+    communication.add_task(message,worker)
+
+    response = jsonify("Message sent")
+    response.status_code = 200
+    return response
