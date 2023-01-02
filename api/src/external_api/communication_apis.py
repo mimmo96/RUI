@@ -56,7 +56,7 @@ def add_task_worker():
         response.status_code = 412
         return response
 
-    message = str(values['message'])
+    task_desc = str(values['task_desc'])
     worker = str(values['worker'])
     communication.add_task(message,worker)
 
