@@ -81,14 +81,15 @@ class CommunicationManager(metaclass=Singleton.Singleton):
 
         self.write_notification_history(msg,status)
 
-    def write_notification_history(self, msg, status):
+    def write_notification_history(self, msg, status, img_url=None):
         import datetime
         import requests
         url = "https://mariorui-bc1e2-default-rtdb.europe-west1.firebasedatabase.app/notifications_history_workers.json"
         data = {
             "date": str(datetime.datetime.now()),
             "message": msg,
-            "status": status
+            "status": status,
+            "img_url": img_url
         }
         requests.post(url, json=data)
 
@@ -102,3 +103,8 @@ class CommunicationManager(metaclass=Singleton.Singleton):
         }
         requests.post(url, json=data)
 
+if __name__ == '__main__':
+    cm = CommunicationManager()
+    cm.add_task("Hello World!", "Mario Rui")
+    url = "https://images.dog.ceo/breeds/terrier-norwich/n02094258_1003.jpg"
+    cm.write_notification_history("Hello World!", 0, url)
