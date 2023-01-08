@@ -27,20 +27,33 @@ def save_shifts_costs():
     else:
         shift_cost = 0.0
 
-    '''
     # Check if shift with that name already exists 
     query = "SELECT * FROM shifts_costs WHERE shift_name LIKE %s;"
 
-    records = db.query(query, (machine_type,))
+    records = db.query(query, (shift_name,))
 
     if str(records).upper() == "ERROR":
         response = jsonify(['Bad request!'])
         response.status_code = 400
         return response
 
-    if not len(records): '''
-    query = "INSERT INTO shifts_costs (shift_name, shift_start, shift_end, shift_cost) VALUES (%s, %s, %s, %s)"
+    #conto i risultati restituiti, se non ce ne sono lo inserisco, se ne esiste almeno uno faccio UPDATE
+    if len(records) == 1:
+        query = "UPDATE shifts_costs SET shift_start=%s, shift_end=%s, shift_cost=%s WHERE shift_name=%s;"
 
+        records = db.command(query, (dt.datetime.strptime(shift_start, '%Y-%m-%dT%H:%M'),
+                                 dt.datetime.strptime(shift_end, '%Y-%m-%dT%H:%M'), shift_cost,shift_name))
+
+        if str(records).upper() != "ERROR":
+            response = jsonify(['Data correctly saved into DB'])
+            response.status_code = 200
+        else:
+            response = jsonify(['Bad !'])
+            response.status_code = 400
+        return response
+    
+
+    query = "INSERT INTO shifts_costs (shift_name, shift_start, shift_end, shift_cost) VALUES (%s, %s, %s, %s)"
     records = db.command(query, (shift_name, dt.datetime.strptime(shift_start, '%Y-%m-%dT%H:%M'),
                                  dt.datetime.strptime(shift_end, '%Y-%m-%dT%H:%M'), shift_cost,))
 
@@ -50,9 +63,5 @@ def save_shifts_costs():
     else:
         response = jsonify(['Bad request!'])
         response.status_code = 400
-
-    '''else:
-        response = jsonify(['Machine type already present in DB'])
-        response.status_code = 400'''
 
     return response
