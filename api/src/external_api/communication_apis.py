@@ -58,7 +58,7 @@ def add_task_worker():
 
     task_desc = str(values['task_desc'])
     worker = str(values['worker'])
-    communication.add_task(message,worker)
+    communication.add_task(task_desc,worker)
 
     response = jsonify("Message sent")
     response.status_code = 200
