@@ -70,6 +70,10 @@ app.register_blueprint(get_shifts_app)
 from external_api.save_shifts_costs import save_shifts_costs_app
 app.register_blueprint(save_shifts_costs_app)
 
+from external_api.delete_shifts_costs import delete_shifts_costs_app
+app.register_blueprint(delete_shifts_costs_app)
+
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
     
