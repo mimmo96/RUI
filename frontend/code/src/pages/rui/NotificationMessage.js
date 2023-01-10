@@ -42,14 +42,34 @@ const [NotificationName, setNotificationName] = useState('');
 
 const [notificationdone, setNotificationDone] = useState(false);
 
+//In broadcast message e individual message vengono salvati i contenuti dei box
+const [BroadcastMessage, setBroadcastMessage] = useState('')
+const [IndividualMessage, setIndividualMessage] = useState('')
 
 const handleCloseNotification = () => {
  setOpenNotification(false);
 };
 
-const handleOpenNotification = () => {
- setOpenNotification(true);
+const handleOpenNotificationBroadcast = () => {
+  console.log(BroadcastMessage);
+  //INSERISCI QUA IL CODICE PER INVIARE IL MESSAGGIO IN BROADCAST (IL MESSAGGIO SI TROVA IN BroadcastMessage)
+
+  
+  //----------------
+  sendNotification();
+  setOpenNotification(true);
 };
+
+const handleOpenNotificationIndividual = () => {
+  console.log(IndividualMessage);
+  //INSERISCI QUA IL CODICE PER INVIARE IL MESSAGGIO AD UN OPERATORE (IL MESSAGGIO SI TROVA IN IndividualMessage)
+
+
+  //----------------
+  sendNotification();
+  setOpenNotification(true);
+};
+
 //operatori a cui inviare i messaggi
 const currencies = [
   {
@@ -104,10 +124,10 @@ return (
             variant="outlined"
             style = {{width: 400}}
 
-            onChange={(event) => {setNotificationName(event.target.value)}}
+            onChange={(event) => {setBroadcastMessage(event.target.value)}}
           />
       </DialogContent>
-     <Button variant="contained" onClick={handleOpenNotification} 
+     <Button variant="contained" onClick={handleOpenNotificationBroadcast} 
      endIcon={<SendOutlined />}>
        Send
      </Button>
@@ -140,10 +160,10 @@ return (
             rows={3}
             variant="outlined"
             style = {{width: 300}}
-            onChange={(event) => {setNotificationName(event.target.value)}}
+            onChange={(event) => {setIndividualMessage(event.target.value)}}
           />
       </DialogContent>
-     <Button variant="contained" onClick={handleOpenNotification}
+     <Button variant="contained" onClick={handleOpenNotificationIndividual}
      endIcon={<SendOutlined />} >
        Send
      </Button>
