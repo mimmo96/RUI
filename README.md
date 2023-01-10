@@ -12,7 +12,7 @@ docker-compose up
 after go on:
 
 ```
-http://localhost:5001
+http://localhost:3000
 ```
 
 for termination execute:
