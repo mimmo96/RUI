@@ -73,6 +73,14 @@ app.register_blueprint(save_shifts_costs_app)
 from external_api.delete_shifts_costs import delete_shifts_costs_app
 app.register_blueprint(delete_shifts_costs_app)
 
+from external_api.get_last_row import get_last_row_app
+app.register_blueprint(get_last_row_app)
+
+from external_api.get_date_range_from_processed_data import get_date_range_from_processed_data_app
+app.register_blueprint(get_date_range_from_processed_data_app)
+
+from external_api.get_data_from_last_session import get_data_from_last_session_app
+app.register_blueprint(get_data_from_last_session_app)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
