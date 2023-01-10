@@ -30,7 +30,7 @@ In it you can find all the calls to register the flask blueprints defined in the
 Here we find the blueprints of the api routes.
 The main taks of these routes is to interact with the database through specific queries.
 
-The following is the commented main code structure for a sample ``_myroute.py_'' route blueprint:
+The following is the **commented** main code structure for a sample ``_myroute.py_'' route blueprint:
 
 ```
 # define a new flask blueprint
