@@ -34,11 +34,11 @@ The following is the commented main code structure for a sample ``_myroute.py_''
 
 ```
 # define a new flask blueprint
-myroute_app = Blueprint('get_data_start_app', __name__)
+myroute_app = Blueprint('myroute_app', __name__)
 # match the blueprint to a specific API route
-@get_data_start_app.route('/get_data_start')
+@get_data_start_app.route('/myroute')
 # define the callback for the 
-def get_data_start():
+def myroute():
     # parse the parameters of the API request
     valid_parameters, values = check_params(request, ['param_1','param_2',...])
     # build the database query
