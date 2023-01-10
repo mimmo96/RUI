@@ -53,7 +53,7 @@ const handleCloseNotification = () => {
 const handleOpenNotificationBroadcast = () => {
   console.log(BroadcastMessage);
 
-  fetch('/broadcast?message=' + BroadcastMessage).then(res => res = res.json()).then(data => {});
+  fetch('/send_app_notification_workers?message=' + BroadcastMessage).then(res => res = res.json()).then(data => {});
   
   sendNotification();
   setOpenNotification(true);
@@ -62,7 +62,7 @@ const handleOpenNotificationBroadcast = () => {
 const handleOpenNotificationIndividual = () => {
   console.log(IndividualMessage);
 
-  fetch('/broadcast?message=' + IndividualMessage).then(res => res = res.json()).then(data => {});
+  fetch('/send_notification_single_user?message=' + IndividualMessage + '&token=fSdsP76WSfumZ13y94OGmT:APA91bE03dKsNtNtrta7f7Vm12fcSOtcrHelmTTe37xwRASm0WD608vO-wvHmc3MAORohyVbtuqK2dML19n660LYBLni9I7_y9zFN22K6tyB1NaEMAKR_bv6ZS0FAjdxXkhyKbMy5fw_').then(res => res = res.json()).then(data => {});
 
   sendNotification();
   setOpenNotification(true);
@@ -109,7 +109,6 @@ return (
      <Typography variant="h5">Send comunication to all operators</Typography>
       <DialogContent>
           <TextField
-            required
             margin="normal"
             id="notificationMess_name"
             label="Message"
@@ -146,7 +145,6 @@ return (
           ))}
         </TextField>
           <TextField
-            required
             margin="normal"
             id="notificationMess_name"
             label="Message"
