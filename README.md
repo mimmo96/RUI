@@ -2,7 +2,7 @@
 
 ## How to run with docker
 
-download Docker Desktop application - [Docker Desktop application](https://docs.docker.com/get-docker/)) 
+download Docker Desktop application - [Docker Desktop application](https://docs.docker.com/get-docker/) 
 
 and run the command:
 ```
