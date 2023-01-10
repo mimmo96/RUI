@@ -8,7 +8,7 @@ const icons = {
 
 const notificationMessage = {
     id: 'notificationMessage',
-    title: 'NotificationMessage',
+    title: 'Notification',
     type: 'group',
     children: [
         {

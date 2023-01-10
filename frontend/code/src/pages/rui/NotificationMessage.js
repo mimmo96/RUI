@@ -52,20 +52,18 @@ const handleCloseNotification = () => {
 
 const handleOpenNotificationBroadcast = () => {
   console.log(BroadcastMessage);
-  //INSERISCI QUA IL CODICE PER INVIARE IL MESSAGGIO IN BROADCAST (IL MESSAGGIO SI TROVA IN BroadcastMessage)
 
+  fetch('/broadcast?message=' + BroadcastMessage).then(res => res = res.json()).then(data => {});
   
-  //----------------
   sendNotification();
   setOpenNotification(true);
 };
 
 const handleOpenNotificationIndividual = () => {
   console.log(IndividualMessage);
-  //INSERISCI QUA IL CODICE PER INVIARE IL MESSAGGIO AD UN OPERATORE (IL MESSAGGIO SI TROVA IN IndividualMessage)
 
+  fetch('/broadcast?message=' + IndividualMessage).then(res => res = res.json()).then(data => {});
 
-  //----------------
   sendNotification();
   setOpenNotification(true);
 };
@@ -90,9 +88,6 @@ const currencies = [
   },
 ];
 const sendNotification = () => {
-    //fetch('/save_machine_and_machine_type?' + new URLSearchParams({asset: name, machine_type: type})).then(res => res = res.json()).then(data => {
-    //});
-    console.log(timeSpan);
     Swal.fire({
         icon: 'success',
         confirmButtonColor: '#1890ff',
