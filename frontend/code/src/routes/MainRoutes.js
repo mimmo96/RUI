@@ -14,6 +14,7 @@ const DataHistory = Loadable(lazy(() => import('pages/rui/data-history/DataHisto
 const RealTimeMonitoring = Loadable(lazy(() => import('pages/rui/RealTimeMonitoring')));
 const Calculator = Loadable(lazy(() => import('pages/rui/Calculator')));
 const Customization = Loadable(lazy(() => import('pages/rui/Customization')));
+const NotificationMessage = Loadable(lazy(() => import('pages/rui/NotificationMessage')));
 
 // render - utilities
 const Typography = Loadable(lazy(() => import('pages/components-overview/Typography')));
@@ -47,6 +48,11 @@ const MainRoutes = {
             path: 'calculator',
             element: <Calculator />
         },
+        {
+            path: 'notificationMessage',
+            element: <NotificationMessage />
+        },
+        ,
         {
             path: 'customization',
             element: <Customization />
