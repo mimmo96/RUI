@@ -31,10 +31,14 @@ async function createPdf({doc, elements}){
     }
 }
 
-export async function exportToPDF() {
+export async function exportToPDF(text) {
     const doc = new jsPDF("p", "px");
-    const elements = utilsReport.elements;
+    let day = new Date();
+    let elements = utilsReport.elements;
+    const options = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
+    doc.text(20, 20, text + '   ' + day.toLocaleDateString('en-US', options));
+    //console.log(elements[0])
     await createPdf({doc, elements});
 
-    doc.save(`report.pdf`);
+    doc.save(text);
 }

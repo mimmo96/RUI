@@ -5,7 +5,6 @@ import {
 import {
     Grid
 } from '@mui/material';
-
 import DateSelection from './DateSelection';
 import MachineChartSelector from './MachineChartSelector';
 import PowerCharts from './PowerCharts';

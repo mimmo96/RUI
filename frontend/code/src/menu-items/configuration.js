@@ -21,14 +21,6 @@ const configuration = {
             url: '/customization',
             icon: icons.FormatPainterOutlined,
             breadcrumbs: true
-        },
-        {
-            id: 'settings',
-            title: 'Settings',
-            type: 'item',
-            url: '/settings',
-            icon: icons.SettingOutlined,
-            breadcrumbs: true
         }
 
     ]

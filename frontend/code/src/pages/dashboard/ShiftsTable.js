@@ -48,11 +48,23 @@ const headCells = [
         label: 'Shift Name'
     },
     {
-        id: 'shift_time',
+        id: 'shift_start',
         align: 'left',
         disablePadding: false,
-        label: 'Shift Time'
-    }
+        label: 'Start Time'
+    },
+    {
+        id: 'shift_end',
+        align: 'left',
+        disablePadding: false,
+        label: 'End Time'
+    },
+    {
+        id: 'shift_cost',
+        align: 'right',
+        disablePadding: true,
+        label: 'Cost'
+    },
 ];
 
 // ==============================|| ORDER TABLE - HEADER ||============================== //
@@ -85,10 +97,10 @@ ShiftsTableHead.propTypes = {
 
 export default function ShiftsTable(rowsData) {
     const [order] = useState('asc');
-    const [orderBy] = useState('idMachine');
+    const [orderBy] = useState('idShift');
     const [selected] = useState([]);
 
-    const isSelected = (idMachine) => selected.indexOf(idMachine) !== -1;
+    const isSelected = (idShift) => selected.indexOf(idShift) !== -1;
 
     return (
         <Box>
@@ -129,13 +141,11 @@ export default function ShiftsTable(rowsData) {
                                     key={row.id}
                                     selected={isItemSelected}
                                 >
-                                    <TableCell component="th" id={labelId} scope="row" align="left">
-                                        <Link color="secondary" component={RouterLink} to="">
-                                            {row.id}
-                                        </Link>
-                                    </TableCell>
-                                    <TableCell align="left">{row.asset}</TableCell>
-                                    <TableCell align="right">{row.machine_type}
+
+                                    <TableCell align="left">{row.shift_name}</TableCell>
+                                    <TableCell align="left">{row.shift_start}</TableCell>
+                                    <TableCell align="left">{row.shift_end}</TableCell>
+                                    <TableCell align="right">{row.shift_cost}
                                     </TableCell>
                                 </TableRow>
                             );

@@ -43,6 +43,7 @@ function Customization() {
     const [machine_name, setMachineName] = useState('');
     const [machine_type, setMachineType] = useState('');
     const [shift_name, setShiftName] = useState('');
+    const [shift_cost, setShiftCost] = useState('');
 
     const [new_machine, setNewMachine] = useState(false);
 
@@ -73,12 +74,39 @@ function Customization() {
     }
 
     const getShifts = () => {
+      const data = [
+          {
+              "shift_cost": "0",
+              "shift_start": "Thu, 01 Jan 1970 00:00:00 GMT",
+              "shift_end": "Thu, 01 Jan 1970 12:00:00 GMT",
+              "shift_name": "A01",
+
+          },
+          {
+              "shift_cost": "0",
+              "shift_name": "E01",
+              "shift_start": "Thu, 01 Jan 1970 12:00:00 GMT",
+              "shift_end": "Thu, 01 Jan 1970 00:00:00 GMT",
+          }
+      ]
+      if(data != null)
+        data.forEach((item, i) => {
+          item.id = i + 1;
+          let start_hour =  new Date(item.shift_start).getHours() - 1;
+          start_hour = start_hour.toString().padStart(2, '0');
+          item.shift_start = start_hour+':00';
+          let end_hour =  new Date(item.shift_end).getHours() - 1;
+          end_hour = end_hour.toString().padStart(2, '0');
+          item.shift_end = end_hour+':00';
+          //item.shift_start = new Date(item.shift_start).getHours() - 1;
+          //item.shift_end = new Date(item.shift_end).getHours() - 1;
+        });
       // fetch('/get_machines').then(res => res = res.json()).then(data => {
       //   if(data != null)
       //     data.forEach((item, i) => {
       //       item.id = i + 1;
       //     });
-      //   setShiftsData(data);
+      setShiftsData(data);
       //});
     }
 
@@ -200,6 +228,16 @@ function Customization() {
                 fullWidth
                 variant="filled"
                 onChange={(event) => {setShiftName(event.target.value)}}
+              />
+              <TextField
+                required
+                margin="dense"
+                id="shift_cost"
+                label="Shift Cost"
+                type="text"
+                fullWidth
+                variant="filled"
+                onChange={(event) => {setShiftCost(event.target.value)}}
               />
               <TimeSelection timeSpanSetter={setTimeSpan} />
             </DialogContent>

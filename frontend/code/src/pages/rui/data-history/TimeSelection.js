@@ -45,7 +45,7 @@ function TimeSelection(props) {
             id="panel1bh-header">
                 <Stack direction="row" alignItems="center" spacing={2}>
                     <CalendarOutlined />
-                    <Typography>Date span</Typography>
+                    <Typography>Shift Duration</Typography>
                 </Stack>
             </AccordionSummary>
             <AccordionDetails>
