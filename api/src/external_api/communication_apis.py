@@ -47,7 +47,7 @@ def send_notification_single_user():
     from CommunicationManager import CommunicationManager
     communication = CommunicationManager()
 
-    params_list = ["message","token"]
+    params_list = ["message","status","token"]
     valid_parameters, values = check_params(request, params_list)
     if not valid_parameters:
         response = jsonify(['Precondition failed: parameters are not valid'])
@@ -55,8 +55,10 @@ def send_notification_single_user():
         return response
 
     message = str(values['message'])
+    status = str(values['status'])
+    #img_url = str(values['img_url'])
     token = str(values['token']) # Mockare questo campo, se necessario
-    communication.send_notification_single_user(message,token)
+    communication.send_notification_single_user(message,status, None, token)
 
     response = jsonify("Message sent")
     response.status_code = 200
