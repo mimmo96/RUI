@@ -1,4 +1,4 @@
-# Backend_Smart_App_3
+# RUI
 
 ## How to run with docker
 
