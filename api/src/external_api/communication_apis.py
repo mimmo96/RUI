@@ -40,7 +40,7 @@ def send_app_notification_workers():
 
     response = jsonify("Message sent")
     response.status_code = 200
-    return response\
+    return response
 
 @communication_app.route('/send_notification_single_user', methods=['GET'])
 def send_notification_single_user():
