@@ -49,7 +49,26 @@ class CommunicationManager(metaclass=Singleton.Singleton):
         url = "https://api.telegram.org/bot"+self.telegram_token_channel+"/sendContact?chat_id="+str(user_id)+"&phone_number="+str(phone_number)+"&first_name="+str(first_name)+"&last_name="+str(last_name)
         requests.get(url)
 
-    def send_broadcast_app_notifications_workers(self, msg, status=0):
+    def send_notification_single_user(self, msg, status, img_url=None, token=None):
+        url_fcm = "https://fcm.googleapis.com/fcm/send"
+        server_key = "AAAAZYP-M6w:APA91bF1tze3qVxc1DJ7e6mxUw0kGkod_P9uUkZZbX8fImHxLxN_xGWB6svL7yVZ2uC4WUagRMZ0L4c98cqdJU3P3y3fTGM4p9GPYG4pevzn26ZkuauwooJihP3gU2pKAP6BGQbFOLUM"
+        headers = {
+            'Content-Type': 'application/json',
+            'Authorization': 'key=' + server_key
+        }
+        data = {
+            "to": token,
+            "notification": {
+                "title": "RUI Notification",
+                "body": msg
+            }
+        }
+        print(">>>>Sending notification to: " + str(token))
+        requests.post(url_fcm, json=data, headers=headers)
+
+        self.write_notification_history(msg, status, img_url=img_url, token=token)
+
+    def send_broadcast_app_notifications_workers(self, msg, status=0, img_url=None):
         url_tokens = "https://mariorui-bc1e2-default-rtdb.europe-west1.firebasedatabase.app/tokens_workers.json"
 
         url_fcm = "https://fcm.googleapis.com/fcm/send"
@@ -79,9 +98,9 @@ class CommunicationManager(metaclass=Singleton.Singleton):
                 response = requests.post(url_fcm, json=data, headers=headers)
                 print("<<<<<",response.text,"\n")
 
-        self.write_notification_history(msg,status)
+        self.write_notification_history(msg,status, img_url=img_url)
 
-    def write_notification_history(self, msg, status, img_url=None):
+    def write_notification_history(self, msg, status, img_url=None,token=None):
         import datetime
         import requests
         url = "https://mariorui-bc1e2-default-rtdb.europe-west1.firebasedatabase.app/notifications_history_workers.json"
@@ -89,7 +108,8 @@ class CommunicationManager(metaclass=Singleton.Singleton):
             "date": str(datetime.datetime.now()),
             "message": msg,
             "status": status,
-            "img_url": img_url
+            "img_url": img_url,
+            "token": token
         }
         requests.post(url, json=data)
 
@@ -107,4 +127,5 @@ if __name__ == '__main__':
     cm = CommunicationManager()
     cm.add_task("Hello World!", "Mario Rui")
     url = "https://images.dog.ceo/breeds/terrier-norwich/n02094258_1003.jpg"
-    cm.write_notification_history("Hello World!", 0, url)
+    cm.send_notification_single_user("Notifica solo per Daniele", 0,
+                                     token = "fSdsP76WSfumZ13y94OGmT:APA91bE03dKsNtNtrta7f7Vm12fcSOtcrHelmTTe37xwRASm0WD608vO-wvHmc3MAORohyVbtuqK2dML19n660LYBLni9I7_y9zFN22K6tyB1NaEMAKR_bv6ZS0FAjdxXkhyKbMy5fw_")
