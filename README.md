@@ -40,4 +40,4 @@ docker-compose down
 
 Currently the project is only using the _master_ branch
 
-Note: the code is throughly commented.
+Note: we also encourage to read the code which is throughly commented.
