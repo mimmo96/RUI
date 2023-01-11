@@ -1,6 +1,11 @@
 // material-ui
+import './Customization.css'
+
 import { Typography,
-         FormControl,
+         Box,
+         Checkbox,
+         FormGroup,
+         FormControlLabel,
          InputLabel,
          Input,
          FormHelperText,
@@ -36,10 +41,11 @@ function Customization() {
 
     const [machines_data, setMachinesData] = useState(new Array(0));
     const [shifts_data, setShiftsData] = useState(new Array(0));
-
     const [open_machine, setOpenMachines] = useState(false);
     const [open_shift, setOpenShifts] = useState(false);
+    const [open_shift_delete, setOpenShiftsDelete] = useState(false);
 
+    const [checked, setChecked] = useState(new Array(0));
     const [machine_name, setMachineName] = useState('');
     const [machine_type, setMachineType] = useState('');
     const [shift_name, setShiftName] = useState('');
@@ -59,8 +65,16 @@ function Customization() {
       setOpenShifts(true);
     };
 
+    const handleClickOpenShiftsDelete = () => {
+      setOpenShiftsDelete(true);
+    };
+
     const handleCloseShifts = () => {
       setOpenShifts(false);
+    };
+
+    const handleCloseShiftsDelete = () => {
+      setOpenShiftsDelete(false);
     };
 
     const getMachines = () => {
@@ -73,41 +87,25 @@ function Customization() {
       });
     }
 
-    const getShifts = () => {
-      const data = [
-          {
-              "shift_cost": "0",
-              "shift_start": "Thu, 01 Jan 1970 00:00:00 GMT",
-              "shift_end": "Thu, 01 Jan 1970 12:00:00 GMT",
-              "shift_name": "A01",
 
-          },
-          {
-              "shift_cost": "0",
-              "shift_name": "E01",
-              "shift_start": "Thu, 01 Jan 1970 12:00:00 GMT",
-              "shift_end": "Thu, 01 Jan 1970 00:00:00 GMT",
-          }
-      ]
-      if(data != null)
-        data.forEach((item, i) => {
-          item.id = i + 1;
-          let start_hour =  new Date(item.shift_start).getHours() - 1;
-          start_hour = start_hour.toString().padStart(2, '0');
-          item.shift_start = start_hour+':00';
-          let end_hour =  new Date(item.shift_end).getHours() - 1;
-          end_hour = end_hour.toString().padStart(2, '0');
-          item.shift_end = end_hour+':00';
-          //item.shift_start = new Date(item.shift_start).getHours() - 1;
-          //item.shift_end = new Date(item.shift_end).getHours() - 1;
-        });
-      // fetch('/get_machines').then(res => res = res.json()).then(data => {
-      //   if(data != null)
-      //     data.forEach((item, i) => {
-      //       item.id = i + 1;
-      //     });
-      setShiftsData(data);
-      //});
+    const getShifts = () => {
+      fetch('/get_shifts').then(res => res = res.json()).then(data => {
+        if(data != null)
+          data.forEach((item, i) => {
+            item.id = i + 1;
+            let start_hour =  new Date(item.shift_start).getHours();
+            let start_mins =  new Date(item.shift_start).getMinutes();
+            start_hour = start_hour.toString().padStart(2, '0');
+            start_mins = start_mins.toString().padEnd(2, '0');
+            item.shift_start = start_hour+':'+start_mins;
+            let end_hour =  new Date(item.shift_end).getHours();
+            let end_mins =  new Date(item.shift_end).getMinutes();
+            end_hour = end_hour.toString().padStart(2, '0');
+            end_mins = end_mins.toString().padEnd(2, '0');
+            item.shift_end = end_hour+':'+end_mins;
+          });
+          setShiftsData(data);
+      });
     }
 
     const addMachine = () => {
@@ -125,16 +123,68 @@ function Customization() {
     }
 
     const addShift = () => {
-      //fetch('/save_machine_and_machine_type?' + new URLSearchParams({asset: name, machine_type: type})).then(res => res = res.json()).then(data => {
-      //});
-      console.log(timeSpan);
+      if(shift_cost != ""){
+        let shift_start = timeSpan[0];
+        let shift_end = timeSpan[1];
+        shift_start = (shift_start.$H - 1)+":"+shift_start.$m
+        shift_end = (shift_end.$H - 1)+":"+shift_end.$m
+        fetch('/save_shifts_costs?' + new URLSearchParams({shift_name: shift_name,
+          shift_start: shift_start,
+          shift_end: shift_end,
+          shift_cost: shift_cost}))
+        .then(res => res = res.json())
+        .then(data => {});
+        console.log(timeSpan);
+        Swal.fire({
+          icon: 'success',
+          confirmButtonColor: '#1890ff',
+          title: 'Success!',
+          text: 'A new shift was added',
+        })
+        setOpenShifts(false);
+        setNewMachine(true);
+      }
+      else{
+        Swal.fire({
+          icon: 'error',
+          confirmButtonColor: '#1890ff',
+          title: 'Error!',
+          text: 'The cost must be a number',
+        })
+        //setOpenShifts(false);
+      }
+      setShiftCost("");
+    }
+
+    const deleteShift = () => {
+      checked.forEach((item, i) => {
+        fetch('/delete_shifts_costs?' + new URLSearchParams({shift_name: item}),
+          { method: 'DELETE' })
+        .then(() => console.log(item+" was deleted."));
+      });
       Swal.fire({
         icon: 'success',
         confirmButtonColor: '#1890ff',
         title: 'Success!',
-        text: 'A new shift was added',
-      })
-      setOpenShifts(false);
+        text: 'Shifts were removed',
+      });
+      setOpenShiftsDelete(false);
+      setNewMachine(true);
+    }
+
+    const handleCheck = (event) => {
+      var updatedList = [...checked];
+      if (event.target.checked)
+        updatedList = [...checked, event.target.labels[0].id];
+      else
+        updatedList.splice(checked.indexOf(event.target.labels[0].id));
+      setChecked(updatedList);
+    };
+
+    const handleCost = (e) => {
+      const regex = /^[0-9\b]+$/;
+      if (regex.test(e.target.value))
+        setShiftCost(e.target.value);
     }
 
 	useEffect(() => {
@@ -200,6 +250,9 @@ function Customization() {
             </DialogActions>
           </Dialog>
         </Grid>
+
+
+
         <Grid item xs={12}>
           <Typography variant="h5">Shifts</Typography>
         </Grid>
@@ -208,7 +261,7 @@ function Customization() {
             <ShiftsTable rows={shifts_data}/>
           </MainCard>
         </Grid>
-        <Grid item xs={12}>
+        <Grid item>
           <Button variant="outlined" onClick={handleClickOpenShifts}
           style={{
               backgroundColor: "#ffffff",
@@ -234,16 +287,45 @@ function Customization() {
                 margin="dense"
                 id="shift_cost"
                 label="Shift Cost"
-                type="text"
+                type="number"
                 fullWidth
                 variant="filled"
-                onChange={(event) => {setShiftCost(event.target.value)}}
+                onChange={(event) => {handleCost(event)}}
               />
               <TimeSelection timeSpanSetter={setTimeSpan} />
             </DialogContent>
             <DialogActions>
               <Button onClick={handleCloseShifts}>Cancel</Button>
               <Button onClick={addShift}>Add</Button>
+            </DialogActions>
+          </Dialog>
+        </Grid>
+
+        <Grid item>
+          <Button variant="outlined" onClick={handleClickOpenShiftsDelete}
+          style={{
+              backgroundColor: "#ffffff",
+          }}
+          startIcon={<PlusOutlined />} color="secondary">
+            DELETE SHIFT
+          </Button>
+          <Dialog open={open_shift_delete} onClose={handleCloseShiftsDelete}>
+            <DialogTitle>Choose which shifts to delete:</DialogTitle>
+            <DialogContent>
+            <FormGroup>
+            {shifts_data.map((item, i) => (
+              <FormControlLabel
+                id={item.shift_name}
+                key={i}
+                label={item.shift_name}
+                control={<Checkbox onChange={handleCheck}/>}
+              />
+            ))}
+            </FormGroup>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleCloseShiftsDelete}>Cancel</Button>
+              <Button onClick={deleteShift}>Delete</Button>
             </DialogActions>
           </Dialog>
         </Grid>

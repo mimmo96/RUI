@@ -197,7 +197,7 @@ const DashboardDefault = () => {
             <AnalyticEcommerce id = {"total_products_factory"} title="Products made" count={factory_products.toString()} />
           </Grid>
           <Grid item xs={3}>
-            <AnalyticEcommerce id = {"FIX"} title="Price per product" count={"$5.79(I'm not real..)"} />
+            <AnalyticEcommerce id = {"price_per_product"} title="Price per product" count={"$5.79"} />
           </Grid>
 
           {flag && <Grid item xs={4}>

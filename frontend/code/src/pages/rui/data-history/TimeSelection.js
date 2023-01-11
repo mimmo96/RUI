@@ -33,8 +33,8 @@ import dayjs from 'dayjs';
 // ======================================================================
 
 function TimeSelection(props) {
-    const [timeStart, setTimeStart] = useState(dayjs().hour(0).minute(0).second(0));
-    const [timeEnd, setTimeEnd] = useState(dayjs().hour(23).minute(59).second(0));
+    const [timeStart, setTimeStart] = useState(null);
+    const [timeEnd, setTimeEnd] = useState(null);
 
 
     return (
