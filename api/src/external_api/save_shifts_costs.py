@@ -9,7 +9,7 @@ from utilities.utilities import checkvalue, convert_to_json, check_params
 
 save_shifts_costs_app = Blueprint('save_shifts_costs_app', __name__)
 
-@save_shifts_costs_app.route('/save_shifts_costs', methods=['POST'])
+@save_shifts_costs_app.route('/save_shifts_costs', methods=['GET'])
 def save_shifts_costs():
     params_list = ["shift_name", "shift_start", "shift_end", "shift_cost"]
     valid_parameters, values = check_params(request, params_list)
