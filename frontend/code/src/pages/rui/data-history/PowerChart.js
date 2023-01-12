@@ -18,9 +18,9 @@ import utilsReport from 'utils/utilsReport';
 // ======================================================================
 
 function PowerChart(props) {
-    const dateSpan = props.dateSpan;    
+    const dateSpan = props.dateSpan;
     const selPower = props.selPower;
-    
+
 
     const [allSeries, setAllSeries] = useState(null);
     const [machineMean, setMachineMean] = useState(null);
@@ -154,7 +154,7 @@ function PowerChart(props) {
             i++;
             if(i == 2)
             {
-                updateAllSeries();    
+                updateAllSeries();
             }
         });
 
@@ -216,7 +216,7 @@ function PowerChart(props) {
                     type: 'line',
                     data: pp2_var
             });
-            
+
             i++;
             if(i == 2)
             {
@@ -225,8 +225,8 @@ function PowerChart(props) {
         });
 
     }, [dateSpan]);
-    
-    
+
+
     //---functions for context menu management---
     const [context_menu, setContextMenu] = useState(null);
     const handleContextMenu = (event) => {
@@ -250,7 +250,7 @@ function PowerChart(props) {
         );
     else
         return (
-            <ReactApexChart id="hist_power" onContextMenu={handleContextMenu} series={allSeries} options={options} type='line' height='400px'>
+            <ReactApexChart id="Power_Consumption" onContextMenu={handleContextMenu} series={allSeries} options={options} type='line' height='400px'>
                 <Menu
                     open={context_menu !== null}
                     onClose={handleClose}
@@ -261,8 +261,8 @@ function PowerChart(props) {
                             : undefined
                     }
                 >
-                    <MenuItem onClick={function (){utilsReport.addElement(document.getElementById("hist_power")); handleClose()}}>Add to report</MenuItem>
-                    <MenuItem onClick={function (){utilsReport.removeElement(document.getElementById("hist_power")); handleClose()}}>Remove from report</MenuItem>
+                    <MenuItem onClick={function (){utilsReport.addElement(document.getElementById("Power_Consumption")); handleClose()}}>Add to report</MenuItem>
+                    <MenuItem onClick={function (){utilsReport.removeElement(document.getElementById("Power_Consumption")); handleClose()}}>Remove from report</MenuItem>
                 </Menu>
             </ReactApexChart>
         );

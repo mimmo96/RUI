@@ -22,7 +22,7 @@ function StateChart(props) {
     const dateSpan = props.dateSpan;
 
     const [series, setSeries] = useState(null);
-    
+
     const [options, setOptions] = useState({
         chart: {
             id: 'switchCount',
@@ -153,7 +153,7 @@ function StateChart(props) {
         );
     else
         return (
-            <ReactApexChart id="hist_switch" onContextMenu={handleContextMenu} series={series} options={options} type='bar' height='400px'>
+            <ReactApexChart id="State_Switches_Count" onContextMenu={handleContextMenu} series={series} options={options} type='bar' height='400px'>
                 <Menu
                     open={context_menu !== null}
                     onClose={handleClose}
@@ -164,8 +164,8 @@ function StateChart(props) {
                             : undefined
                     }
                 >
-                    <MenuItem onClick={function (){utilsReport.addElement(document.getElementById("hist_switch")); handleClose()}}>Add to report</MenuItem>
-                    <MenuItem onClick={function (){utilsReport.removeElement(document.getElementById("hist_switch")); handleClose()}}>Remove from report</MenuItem>
+                    <MenuItem onClick={function (){utilsReport.addElement(document.getElementById("State_Switches_Count")); handleClose()}}>Add to report</MenuItem>
+                    <MenuItem onClick={function (){utilsReport.removeElement(document.getElementById("State_Switches_Count")); handleClose()}}>Remove from report</MenuItem>
                 </Menu>
             </ReactApexChart>
         );

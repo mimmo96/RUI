@@ -63,18 +63,15 @@ const HeaderContent = () => {
                 <FilePdfFilled/>
             </IconButton>
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>Personalize the exportation:</DialogTitle>
+                <DialogTitle>Create a new report</DialogTitle>
                 <DialogContent>
-                    <DialogContentText>
-                        Choose a title for your document:
-                    </DialogContentText>
                     <TextField
                         margin="dense"
                         id="name"
-                        label="Title"
-                        type="email"
+                        label="Report Title"
+                        type="text"
                         fullWidth
-                        variant="standard"
+                        variant="filled"
                     />
                     <TableContainer component={Paper}>
                         <Table sx={{ minWidth: 650 }} aria-label="simple table">
