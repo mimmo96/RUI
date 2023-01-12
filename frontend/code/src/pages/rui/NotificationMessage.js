@@ -62,7 +62,7 @@ const handleOpenNotificationBroadcast = () => {
 const handleOpenNotificationIndividual = () => {
   console.log(IndividualMessage);
 
-  fetch('/send_notification_single_user?message=' + IndividualMessage + '&status=0&token=dhmMvlmnT02DCK5Qbpvbk6:APA91bEARP5PDOJnvZYy5ZyNKRQryYbfuBoghMClCumgpP8kO4qTJqAEeT5LQraeAkuGJNT0WEUYq5PjrYC-CFLPEmhA49pbQtNLkfy2ujkMt4UMaJo07cGK6833lIX4hwc4mj9uIZUk').then(res => res = res.json()).then(data => {});
+  fetch('/send_notification_single_user?message=' + IndividualMessage + '&status=0&token=f6lKPw_OTBu1wdviotkcSt:APA91bEwrQAjilzzB3O4Pz3DrQj4h8dLAok50j4yTo5JImA4in_kfKtZ8XXY_L5BUfpqJZMN541ew98E1X-QLh1xjwLrcdrh8TNbNSdnBgzvl2EVQC9CzDCVe-u-5O44AbbQ1cJ3zyHS').then(res => res = res.json()).then(data => {});
 
   sendNotification();
   setOpenNotification(true);

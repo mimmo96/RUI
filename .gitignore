@@ -3,4 +3,5 @@ api/src/external_api/__pycache__
 api/src/utilities/__pycache__
 api/src/machine_learning/__pycache__
 realtimeml/src/__pycache__
+realtimeml/src/utilities/__pycache__
 db/postgres_data
