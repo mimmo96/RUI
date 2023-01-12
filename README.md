@@ -2,11 +2,12 @@
 
 ## Introduction
 
-RUI is a web platform for IoT - AI - Industry 4.0 which is based on 3 docker containers.
+RUI is a web platform for IoT - AI - Industry 4.0 which is based on 4 docker containers.
 This readme explains how to run the whole platform, to know more about the details, please make use of the individual readme files for each of the containers:
 * [API](api/src/) (backend)
 * [Web Interface](frontend/code/) (frontend)
 * [Database](db/) (db)
+* [Realtime ML](realtimeml/src/) (realtimeml)
 
 
 ## How to run
