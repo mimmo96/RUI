@@ -30,9 +30,9 @@ docker-compose down
 
 ## Ports and URLs
 
-| API          | http://api:5000           |
+| API          | http://localhost:5001           |
 |:------------:|:-------------------------:|
-| **Database** | **http://db:5432**        |
+| **Database** | **http://localhost:5432**        |
 | **Frontend** | **http://localhost:3000** |
 
 
